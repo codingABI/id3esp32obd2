@@ -19,7 +19,7 @@ The 12V line can be switch on and off with a toggle switch.
 [Arduino-Sketch](/id3esp32obd2/id3esp32obd2.ino)
 
 ![Device without case](assets/images/Device.jpg)
-The toggle switch in mounted on a black painted clothespeg and can be sticked on a the ventilation grille in the car. 
+The toggle switch to power on/off the device in mounted on a black painted clothespeg and can be sticked on a the ventilation grille in the car. 
 
 ![Device with case](assets/images/DeviceWithCase.jpg)
 ![Device with open case](assets/images/DeviceWithOpenCase.jpg)
