@@ -34,3 +34,10 @@ The window in the case is to show the builtin leds of the esp32.
 
 ### Android App
 To show the ID3 diagnostics data sent by the device via bluetooth an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code  [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12.
+
+Before you can use the app, you have to pair the phone with the device.
+
+After launching the app, you have to connect to the previously paired bluetooth device by pressing the icon 🔗 and select "xx:xx:xx:xx:xx:xx id3esp32obd2" in the list "Bluetooth device" (xx:xx... would be the MAC address of your esp32). To manually disconnect you could select "Disconnect".
+
+In the app you can switch between several dashboards with the left ⇦ and right ⇨ buttons. When you move to another dashboard it could take 1 second to receive first data for the new dashboard and it could take several seconds to receive all dashboard data. When you receive "ERR" the device could not get the requested data from the CAN bus. In this case you should check the Serial output of the esp32.
+
