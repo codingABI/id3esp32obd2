@@ -25,7 +25,7 @@ The toggle switch to power on/off the device in mounted on a black painted cloth
 For a case a simple case is used
 
 ![Device with case](assets/images/DeviceWithCase.jpg)
-The window is only to show the buildin leds.
+The window is only to show the builtin leds of the esp32.
 
 
 ### Android App
