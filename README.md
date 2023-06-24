@@ -11,4 +11,8 @@ This project is licensed under the terms of the 2-Clause BSD License [Copyright 
 
 [Arduino-Sketch](/id3esp32obd2/id3esp32obd2.ino)
 
-
+![Device without case](assets/images/Device.jpg)
+![Device with case](assets/images/DeviceWithCase.jpg)
+![Device with open case](assets/images/DeviceWithOpenCase.jpg)
+![ID3 OBD2 Connector](assets/images/id3obd2ConnectorFemale.jpg)
+![Perfboard](assets/images/Perfboard.jpg)
