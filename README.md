@@ -5,9 +5,9 @@ This project is licensed under the terms of the 2-Clause BSD License [Copyright 
 
 ## Appendix
 ### OBD2 and power up
-The VW ID3 has an ODB2 connector below the steering wheel.
+The VW ID3 has an ODB2 female connector below the steering wheel.
 ![ID3 OBD2 Connector](assets/images/id3obd2ConnectorFemale.jpg)
-The device uses pin 16 (=12V) and pin 5 (=GND) of the ODB2 connector to power up the device and pin 6 (=CAN High) and 14 (=CAN Low) to access the CAN bus. 
+The device uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to power up the device. Pin 6 (=CAN High) and 14 (=CAN Low) are used to access the CAN bus. 
 ![OBD2 connector male](assets/images/obd2ConnectorMale.jpg)
 The 12V line can be switch on and off with a toggle switch.
 ### Device description
