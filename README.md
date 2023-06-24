@@ -37,7 +37,7 @@ To show the ID3 diagnostics data sent by the device via bluetooth an Android pho
 
 Before you can use the app, you have to pair the phone with the device.
 
-After launching the app, you have to connect to the previously paired bluetooth device by pressing the icon 🔗 to open the list "Bluetooth device" and select "xx:xx:xx:xx:xx:xx id3esp32obd2" in the list "Bluetooth device" (xx:xx... would be the MAC address of your esp32). To manually disconnect an existing connection you can select "Disconnect" in the list "Bluetooth device".
+After launching the app, you have to connect to the previously paired bluetooth device by pressing the icon 🔗 to open the list "Bluetooth device" and select "xx:xx:xx:xx:xx:xx id3esp32obd2" (xx:xx... would be the MAC address of your esp32). To manually disconnect an existing connection you can select "Disconnect" in the list "Bluetooth device".
 
 In the app you can switch between several dashboards with the left ⇦ and right ⇨ buttons. When you move to another dashboard it could take 1 second to receive first data for the new dashboard and it could take several seconds to receive all dashboard data. When you receive "ERR" the device could not get the requested data from the CAN bus. In this case you should check the Serial output of the esp32.
 
