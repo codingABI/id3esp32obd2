@@ -11,7 +11,11 @@ The device uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to power u
 ![OBD2 connector male](assets/images/obd2ConnectorMale.jpg)
 The 12V line can be switch on and off with a toggle switch.
 ### Device description
+An esp32 has builtin support for the CAN bus, but needs an additional CAN tranceiver. This device uses a SN65HVD230 CAN transceiver (The 60 Ohm resistor R2 between CANHigh and CANLow was removed). The esp32 waits for the "right" mobile phone connecting via bluetooth (The "right" mobile phone can be defined in  [secrets.h](/id3esp32obd2/secretes.h)). After connecting with the "right" mobile phone the esp32 requests CAN data and forwards the response via bluetooth. When the mobile phone disconnects the bluetooth connection the CAN requests will be stopped.
 
+**WARNING**
+Do not lock the car without disconnecting the bluetooth connection or power off the device by the toggle switch, because the VW ID3 may triggers a car alarm, if CAN requests are received in a locked state. 
+ 
 ![Perfboard](assets/images/Perfboard.jpg)
 
 ![Schematic](assets/images/Schematic.png)
