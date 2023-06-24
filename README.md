@@ -29,4 +29,4 @@ The window in the case is to show the builtin leds of the esp32.
 
 
 ### Android App
-To show the ID3 diagnostics data sent by the id3esp32obd2 an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code  [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12.
+To show the ID3 diagnostics data sent by the device an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code  [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12.
