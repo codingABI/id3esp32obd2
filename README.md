@@ -10,14 +10,19 @@ The VW ID3 has an ODB2 connector below the steering wheel.
 The id3esp32obd2 uses pin 16 (=12V) and pin 5 (=GND) to power up the device and pin 6 (=CAN High) and 14 (=CAN Low) to access the CAN bus. 
 ![OBD2 connector male](assets/images/obd2ConnectorMale.jpg)
 The 12V line can be switch on and off with a toggle switch.
+### Device description
+
+![Perfboard](assets/images/Perfboard.jpg)
 
 ![Schematic](assets/images/Schematic.png)
 
 [Arduino-Sketch](/id3esp32obd2/id3esp32obd2.ino)
 
 ![Device without case](assets/images/Device.jpg)
+The toggle switch in mounted on a black painted clothespeg and can be sticked on a the ventilation grille in the car. 
+
 ![Device with case](assets/images/DeviceWithCase.jpg)
 ![Device with open case](assets/images/DeviceWithOpenCase.jpg)
-![Perfboard](assets/images/Perfboard.jpg)
+
 ### Android App
 To show the ID3 diagnostics data sent by the id3esp32obd2 an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code  [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12.
