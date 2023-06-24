@@ -19,10 +19,14 @@ The 12V line can be switch on and off with a toggle switch.
 [Arduino-Sketch](/id3esp32obd2/id3esp32obd2.ino)
 
 ![Device without case](assets/images/Device.jpg)
-The toggle switch to power on/off the device in mounted on a black painted clothespeg and can be sticked on a the ventilation grille in the car. 
+The toggle switch to power on/off the device in mounted on a black painted clothespeg and can be sticked on a the ventilation grille in the car. The unused pins of the OBD2 cable are protected by heat shrinking tube. 
+
+![Device with open case](assets/images/DeviceWithOpenCase.jpg)
+For a case a simple case is used
 
 ![Device with case](assets/images/DeviceWithCase.jpg)
-![Device with open case](assets/images/DeviceWithOpenCase.jpg)
+The window is only to show the buildin leds.
+
 
 ### Android App
 To show the ID3 diagnostics data sent by the id3esp32obd2 an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code  [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12.
