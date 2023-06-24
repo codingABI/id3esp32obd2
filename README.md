@@ -20,4 +20,4 @@ The 12V line can be switch on and off with a toggle switch.
 ![Device with open case](assets/images/DeviceWithOpenCase.jpg)
 ![Perfboard](assets/images/Perfboard.jpg)
 ### Android App
-To show the ID3 data id3esp32obd2 need an Android phone with the App ![id3esp32obd2 app](id3esp32obd2.apk). This app is a small app made with https://appinventor.mit.edu/ (Source code  ![App source code](id3esp32obd2.aia))
+To show the ID3 diagnostics data sent by the id3esp32obd2 an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code  [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12.
