@@ -22,7 +22,7 @@ The 12V line can be switch on and off with a toggle switch.
 The toggle switch to power on/off the device in mounted on a black painted clothespeg and can be sticked on a the ventilation grille in the car. The unused pins of the OBD2 cable are protected by heat shrinking tube. 
 
 ![Device with open case](assets/images/DeviceWithOpenCase.jpg)
-For a case a simple case is used
+Wooden self-made case.
 
 ![Device with case](assets/images/DeviceWithCase.jpg)
 The window in the case is to show the builtin leds of the esp32.
