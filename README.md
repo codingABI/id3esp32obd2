@@ -9,7 +9,7 @@ The VW ID3 has an ODB2 female connector below the steering wheel:
 
 ![ID3 OBD2 Connector](assets/images/id3obd2ConnectorFemale.jpg)
 
-The device uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to power up the esp32 (Converted down to 3.3V by a LM2596). Pin 6 (=CAN High) and 14 (=CAN Low) are used to access the CAN bus. 
+The id3esp32obd2 uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to power up the esp32 (Converted down to 3.3V by a LM2596). Pin 6 (=CAN High) and 14 (=CAN Low) are used to access the CAN bus. 
 
 ![OBD2 connector male](assets/images/obd2ConnectorMale.jpg)
 
