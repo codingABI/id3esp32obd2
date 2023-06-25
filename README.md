@@ -48,15 +48,19 @@ Do not lock the car without disconnecting the bluetooth connection or power off 
 The id3esp32obd2 waits 500ms between each CAN bus request, because I got weired responses when sending requests too quickly one after the other.
 
 All components are soldered on two pieces perfboard (I had no single perfboard big enough) and the esp32 is stacked over the SN65HVD230 and the buzzer.
+
 ![Perfboard](assets/images/Perfboard.jpg)
 
 ![Device without case](assets/images/Device.jpg)
+
 The toggle switch to power on/off the device in mounted on a wooden, black painted clothespeg and can be sticked on a the ventilation grille in the car. The unused pins of the OBD2 cable are protected by heat shrinking tubes.
 
 ![Device with open case](assets/images/DeviceWithOpenCase.jpg)
+
 The id3esp32obd2 is in a wooden self-made case.
 
 ![Device with case](assets/images/DeviceWithCase.jpg)
+
 The window in the case is to show the builtin leds of the esp32.
 ### Code
 The code for the esp32 was written with the Arduino IDE and can be found in the [Arduino-Sketch folder](/id3esp32obd2)
