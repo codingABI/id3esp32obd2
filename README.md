@@ -19,10 +19,24 @@ The following diagnostics data values are supported:
 - HV battery capacity
 - 12V battery voltage
 
+**WARNING:**
+- Connecting something to your VW ID.3 is your own risk and do this ONLY, if you know, what are you doing. If you make a mistake, it could be a very expensive mistake.
+- This is no a complete ISO-TP and/or UDS implementation. It is just enough to receive some data from a VW ID.3. I'm no CAN expert, just a beginner
+  
 ## License and copyright
 This project is licensed under the terms of the 2-Clause BSD License [Copyright (c) 2023 codingABI](LICENSE). 
 
 ## Appendix
+### Hardware
+- ESP-WROOM-32 NodeMCU (Board manager: ESP32 Dev Model)
+- SN65HVD230 CAN transceiver (60 Ohm resistor R2 between CANHigh and CANLow was removed)
+- OBD2 Connector cable (Plugged in to the OBD2 port below the steering wheel)
+- VW ID.3 Car (Code was developed and tested on a ID.3 Pro S)
+- Two resistors (470k, 100k) for a voltage divider to measure the 12V car battery voltage on an ESP32 analog pin 
+- LM2596 Step down voltage converter (to convert the 12V car battery to 3.3V as a power supply for the ESP32)
+- Android mobile phone with the selfmade app: id3esp32obd2 (https://github.com/codingABI/id3esp32obd2/id3esp32obd2.apk)
+
+Power consumption: 0.6W (0.3W when mobile phone is not connected)
 ### OBD2 and power supply
 The VW ID3 has an ODB2 female connector below the steering wheel:
 
