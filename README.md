@@ -38,7 +38,7 @@ This project is licensed under the terms of the 2-Clause BSD License [Copyright 
 - LM2596 Step down voltage converter (to convert the 12V car battery to 3.3V as a power supply for the ESP32)
 - Android device with the self-made app: id3esp32obd2 (https://github.com/codingABI/id3esp32obd2/id3esp32obd2.apk)
 
-Power consumption: 0.6W (0.3W when android device is not connected)
+Power consumption: 0.6W (0.3W when android device is not connected), 0W when powered off by the toggle switch
 ### OBD2 and power supply
 The VW ID3 has an ODB2 female connector below the steering wheel:
 
