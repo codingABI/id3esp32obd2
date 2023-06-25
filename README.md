@@ -1,4 +1,23 @@
 # id3esp32obd2
+The id3esp32odb2 is a esp32 based DIY bluetooth dongle to show diagnostics data from a VW ID.3 car on an android mobile phone.
+
+The following diagnostice values are supported:
+- SOC (BMS)
+- Car operation mode
+- ODOMETER
+- VIN
+- Speed
+- Driving mode position
+- HV auxilary consumer power
+- HV battery main temperature
+- HV battery cirkulation pump 
+- HV battery voltage
+- HV battery current
+- HV dynamic limit for charging
+- HV Total charge
+- HV Total discharge
+- HV battery capacity
+- 12V battery voltage
 
 ## License and copyright
 This project is licensed under the terms of the 2-Clause BSD License [Copyright (c) 2023 codingABI](LICENSE). 
@@ -45,7 +64,7 @@ The code for the esp32 was written with the Arduino IDE and can be found in the 
 ### Schematic
 ![Schematic](assets/images/Schematic.png)
 
-The volatage device R1/R2 is used to measure the 12V car battery voltage with an esp32 analog pin.
+The voltage devider R1/R2 is used to measure the 12V car battery voltage with an esp32 analog pin.
 
 ### Android App
 To show the ID3 diagnostics data sent by the device via bluetooth an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code: [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12. To install the apk file you have to temporary allow the installation (Samsung: Settings->Apps->Top right dots...->Special access->Install unknown app).
