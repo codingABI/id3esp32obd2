@@ -1,7 +1,7 @@
 /*
  * Project: id3esp32obd2 (Ding19)
  * DIY OBD2 Bluetooth dongle for an VW ID.3
- * An ESP32 is used to forward the following VW ID.3 diagnostics data from the OBD2 connector via Bluetooth to an android device:
+ * An ESP32 is used to forward the following VW ID.3 diagnostics data from the OBD2 connector via Bluetooth to an Android device:
  * - SOC (BMS)
  * - Car operation mode
  * - ODOMETER
@@ -38,7 +38,7 @@
  * - Android device with the self-made app: id3esp32obd2 (https://github.com/codingABI/id3esp32obd2/id3esp32obd2.apk)
  *  
  * Power consumption:
- * - 0.6W (0.3W when no android device is connected)
+ * - 0.6W (0.3W when no Android device is connected)
  *  
  * VW ID.3 OBD2 connector characteristics (without anything plugged in):
  * - 70 Ohm between CANHigh and CANLow
@@ -215,7 +215,7 @@ void btCallback(esp_spp_cb_event_t event, esp_spp_cb_param_t *param) {
       if (i < 5) Serial.print(":"); else Serial.println();
     }
     beep(SHORTBEEP);
-    if ( // Send data only to the android device defined in secrets.h
+    if ( // Send data only to the Android device defined in secrets.h
       (param->srv_open.rem_bda[0] == g_macMobileDevice[0]) && 
       (param->srv_open.rem_bda[1] == g_macMobileDevice[1]) &&
       (param->srv_open.rem_bda[2] == g_macMobileDevice[2]) &&
