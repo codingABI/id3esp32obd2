@@ -56,10 +56,10 @@ void requestHVDashboard(byte boardID) {
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
   readAndSendHVMainTemperature();
 
-  // Cirkulation pump HV battery
+  // Circulation pump HV battery
   checkBTReceive();
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
-  readAndSendHVCirkulationPump();
+  readAndSendHVCirculationPump();
 
   // HV Battery voltage
   checkBTReceive();
