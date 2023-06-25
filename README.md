@@ -36,12 +36,12 @@ Wooden self-made case.
 The window in the case is to show the builtin leds of the esp32.
 
 ### Android App
-To show the ID3 diagnostics data sent by the device via bluetooth an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code  [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12. To install the apk file you have to temporary allow the installation (Samsung: Settings->Apps->Top right dots...->Special access->Install unknown app).
+To show the ID3 diagnostics data sent by the device via bluetooth an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code: [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12. To install the apk file you have to temporary allow the installation (Samsung: Settings->Apps->Top right dots...->Special access->Install unknown app).
 
 #### Bluetooth pairing and selecting the device
 Before you can use the app, you have to pair the phone with the device listed as "id3esp32obd2" in your android bluetooth management.
 
-After launching the app, you have to connect to the previously paired bluetooth device by pressing 🔗 to open the list "Bluetooth device" and select "xx:xx... id3esp32obd2" (xx:xx... would be the MAC address of your esp32). To manually disconnect an existing connection you can select "Disconnect" in the list "Bluetooth device". 
+After launching the app, you have to connect to the previously paired bluetooth device by pressing 🔗 to open the list "Bluetooth device" and select "aa:bb... id3esp32obd2" (aa:bb... would be the MAC address of your esp32). To manually disconnect an existing connection you can select "Disconnect" in the list "Bluetooth device". 
 
 #### General usage
 In the app you can switch between several dashboards with the left ⇦ and right ⇨ buttons. When you move to another dashboard it could take 1.5 seconds to receive first data for the new dashboard and it could take several seconds to receive all dashboard data. When you always receive "ERR" the device could not get the requested data from the CAN bus. In this case you should check the Serial output of the esp32 for more details.
@@ -49,12 +49,12 @@ In the app you can switch between several dashboards with the left ⇦ and right
 #### Titlebar
 ![Title bar](assets/images/appTitleBar.jpg)
 
-In the title bar you can change the select the bluetooth device with 🔗, see the bluetooth connection status "Connected" or "Disconnected", reset the esp32 ♺ or open an info screenwith with ⚙
+In the title bar you can change the select the bluetooth device with 🔗, see the bluetooth connection status "Connected" or "Disconnected", reset the esp32 ♺ or open the [info screen](#info-screen) with with ⚙
 
 #### Dashboard Base
 ![Dashboard 0](assets/images/appDash0.jpg)
 
-The "12V battery" value is measured by the device directly
+The "12V battery" value is measured by the esp32 directly
 #### Dashboard Speed
 ![Dashboard 1](assets/images/appDash1.jpg)
 
