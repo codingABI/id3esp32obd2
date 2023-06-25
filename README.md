@@ -40,7 +40,7 @@ This project is licensed under the terms of the 2-Clause BSD License [Copyright 
 
 Power consumption: 0.6W (0.3W when Android device is not connected), 0W when powered off by the toggle switch S1
 ### OBD2 and power supply
-The VW ID3 has an ODB2 female connector below the steering wheel:
+The VW ID.3 has an ODB2 female connector below the steering wheel:
 
 ![ID3 OBD2 Connector](assets/images/id3obd2ConnectorFemale.jpg)
 
@@ -59,7 +59,7 @@ The red marked 60 Ohm resistor R2 between CANHigh and CANLow was removed.
 The ESP32 waits for the "allowed" Android device connecting via Bluetooth (The "allowed" Android device can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the "allowed" Android device the ESP32 requests CAN data and forwards the response via Bluetooth. When the Android device disconnects the Bluetooth connection the CAN requests will be stopped.
 
 **WARNING**
-Do not lock the car without disconnecting the Bluetooth connection or power off the device by the toggle switch S1, because the VW ID3 may triggers a car alarm, if CAN requests are received in a locked state. 
+Do not lock the car without disconnecting the Bluetooth connection or power off the device by the toggle switch S1, because the VW ID.3 may triggers a car alarm, if CAN requests are received in a locked state. 
 
 The id3esp32obd2 waits 500ms between each CAN bus request, because I got weired responses when sending requests too quickly.
 
