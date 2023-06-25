@@ -35,7 +35,7 @@ All components are soldered on two pieces perfboard (I had no single perfboard b
 The toggle switch to power on/off the device in mounted on a wooden, black painted clothespeg and can be sticked on a the ventilation grille in the car. The unused pins of the OBD2 cable are protected by heat shrinking tubes.
 
 ![Device with open case](assets/images/DeviceWithOpenCase.jpg)
-Wooden self-made case.
+The id3esp32obd2 is in a wooden self-made case.
 
 ![Device with case](assets/images/DeviceWithCase.jpg)
 The window in the case is to show the builtin leds of the esp32.
