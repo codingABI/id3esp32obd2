@@ -100,7 +100,7 @@ In the app you can switch between several dashboards with the left ⇦ and right
 #### Titlebar
 ![Title bar](assets/images/appTitleBar.jpg)
 
-In the title bar you can change the selected the Bluetooth device with 🔗, view the Bluetooth connection status "Connected" or "Disconnected", reset the ESP32 with ♺ or open the [info screen](#info-screen) with with ⚙
+In the title bar you can change the selected Bluetooth device with 🔗, view the Bluetooth connection status "Connected" or "Disconnected", reset the ESP32 with ♺ or open the [info screen](#info-screen) with with ⚙
 
 #### Dashboard Base
 ![Dashboard 0](assets/images/appDash0.jpg)
