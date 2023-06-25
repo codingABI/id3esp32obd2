@@ -151,23 +151,23 @@ void readAndSendHVMainTemperature() {
   }
 }
 
-/* Cirkulation pump HV battery
+/* Circulation pump HV battery
  *
  * Example:
  * 22:03:18.361 -> Send    ID: 17FC007B Flags:1 Length:8 Data:03 22 74 3B 00 00 00 00 
  * 22:03:18.361 -> Receive ID: 17FE007B Flags:1 Length:8 Data:04 62 74 3B 00 AA AA AA 
  */
-void readAndSendHVCirkulationPump() {
+void readAndSendHVCirculationPump() {
   #define MAXSTRDATALENGTH 80
   char strData[MAXSTRDATALENGTH+1];
   
   if (sendUDSRequest(0x17fc007B,UDS_ReadDataByIdentifier_0x22,0x74,0x3B)) {
-    Serial.print("Cirkulation pump in %: ");
+    Serial.print("Circulation pump in %: ");
     Serial.println(g_dataBuffer[0]);
-    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idHVCIRKULATIONPUMP,g_dataBuffer[0]);
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idHVCIRCULATIONPUMP,g_dataBuffer[0]);
     g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
-    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idHVCIRKULATIONPUMP);
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idHVCIRCULATIONPUMP);
     g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
 }
