@@ -56,7 +56,7 @@ An ESP32 has builtin support for the CAN bus, but needs an additional CAN transc
 
 The red marked 60 Ohm resistor R2 between CANHigh and CANLow was removed. 
 
-The ESP32 waits for the "right" android device connecting via Bluetooth (The "right" android device can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the "right" android device the ESP32 requests CAN data and forwards the response via Bluetooth. When the android device disconnects the Bluetooth connection the CAN requests will be stopped.
+The ESP32 waits for the "correct" android device connecting via Bluetooth (The "correct" android device can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the "correct" android device the ESP32 requests CAN data and forwards the response via Bluetooth. When the android device disconnects the Bluetooth connection the CAN requests will be stopped.
 
 **WARNING**
 Do not lock the car without disconnecting the Bluetooth connection or power off the device by the toggle switch, because the VW ID3 may triggers a car alarm, if CAN requests are received in a locked state. 
