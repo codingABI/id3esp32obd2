@@ -1,5 +1,5 @@
 # id3esp32obd2
-The id3esp32odb2 is a esp32 based DIY bluetooth dongle and android app to show diagnostics data from a VW ID.3 car on an android device.
+The id3esp32odb2 is a ESP32 based DIY bluetooth dongle and android app to show diagnostics data from a VW ID.3 car on an android device.
 
 ![Overview](assets/images/Overview.png)
 
@@ -44,26 +44,26 @@ The VW ID3 has an ODB2 female connector below the steering wheel:
 
 ![ID3 OBD2 Connector](assets/images/id3obd2ConnectorFemale.jpg)
 
-The id3esp32obd2 uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to power up the esp32 (Converted down to 3.3V by a LM2596). Pin 6 (=CAN High) and 14 (=CAN Low) are used to access the CAN bus. 
+The id3esp32obd2 uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to power up the ESP32 (Converted down to 3.3V by a LM2596). Pin 6 (=CAN High) and 14 (=CAN Low) are used to access the CAN bus. 
 
 ![OBD2 connector male](assets/images/obd2ConnectorMale.jpg)
 
 The 12V line can be switch on and off with a toggle switch.
 ### Device description
-An esp32 has builtin support for the CAN bus, but needs an additional CAN tranceiver. The id3esp32obd2 uses a SN65HVD230 CAN transceiver. 
+An ESP32 has builtin support for the CAN bus, but needs an additional CAN tranceiver. The id3esp32obd2 uses a SN65HVD230 CAN transceiver. 
 
 ![SN65HVD230 remmoved resistor](assets/images/SN65HVD230.jpg)
 
 The red marked 60 Ohm resistor R2 between CANHigh and CANLow was removed. 
 
-The esp32 waits for the "right" android device connecting via bluetooth (The "right" android device can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the "right" android device the esp32 requests CAN data and forwards the response via bluetooth. When the android device disconnects the bluetooth connection the CAN requests will be stopped.
+The ESP32 waits for the "right" android device connecting via bluetooth (The "right" android device can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the "right" android device the ESP32 requests CAN data and forwards the response via bluetooth. When the android device disconnects the bluetooth connection the CAN requests will be stopped.
 
 **WARNING**
 Do not lock the car without disconnecting the bluetooth connection or power off the device by the toggle switch, because the VW ID3 may triggers a car alarm, if CAN requests are received in a locked state. 
 
 The id3esp32obd2 waits 500ms between each CAN bus request, because I got weired responses when sending requests too quickly one after the other.
 
-All components are soldered on two pieces perfboard (I had no single perfboard big enough) and the esp32 is stacked over the SN65HVD230 and the buzzer.
+All components are soldered on two pieces perfboard (I had no single perfboard big enough) and the ESP32 is stacked over the SN65HVD230 and the buzzer.
 
 ![Perfboard](assets/images/Perfboard.jpg)
 
@@ -77,14 +77,14 @@ The id3esp32obd2 is in a wooden self-made case.
 
 ![Device with case](assets/images/DeviceWithCase.jpg)
 
-The window in the case is to show the builtin leds of the esp32.
+The window in the case is to show the builtin leds of the ESP32.
 ### Code
-The code for the esp32 was written with the Arduino IDE and can be found in the [Arduino-Sketch folder](/id3esp32obd2)
+The code for the ESP32 was written with the Arduino IDE and can be found in the [Arduino-Sketch folder](/id3esp32obd2)
 
 ### Schematic
 ![Schematic](assets/images/Schematic.png)
 
-The voltage devider R1/R2 is used to measure the 12V car battery voltage with an esp32 analog pin.
+The voltage devider R1/R2 is used to measure the 12V car battery voltage with an ESP32 analog pin.
 
 ### Android App
 To show the ID3 diagnostics data sent by the device via bluetooth an android device with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code: [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12. To install the apk file you have to temporary allow the installation (Samsung: Settings->Apps->Top right dots...->Special access->Install unknown app).
@@ -92,20 +92,20 @@ To show the ID3 diagnostics data sent by the device via bluetooth an android dev
 #### Bluetooth pairing and selecting the device
 Before you can use the app, you have to pair the android device with the id3esp32obd2 device listed as "id3esp32obd2" in your android bluetooth management.
 
-After launching the app, you have to connect to the previously paired bluetooth device by pressing 🔗 to open the list "Bluetooth device" and select "aa:bb... id3esp32obd2" (aa:bb... would be the MAC address of your esp32). To manually disconnect an existing connection you can select "Disconnect" in the list "Bluetooth device". 
+After launching the app, you have to connect to the previously paired bluetooth device by pressing 🔗 to open the list "Bluetooth device" and select "aa:bb... id3esp32obd2" (aa:bb... would be the MAC address of your ESPp32). To manually disconnect an existing connection you can select "Disconnect" in the list "Bluetooth device". 
 
 #### General usage
-In the app you can switch between several dashboards with the left ⇦ and right ⇨ buttons. When you move to another dashboard it could take 1.5 seconds to receive first data for the new dashboard and it could take several seconds to receive all dashboard data. When you always receive "ERR" the device could not get the requested data from the CAN bus. In this case you should check the Serial output of the esp32 for more details.
+In the app you can switch between several dashboards with the left ⇦ and right ⇨ buttons. When you move to another dashboard it could take 1.5 seconds to receive first data for the new dashboard and it could take several seconds to receive all dashboard data. When you always receive "ERR" the device could not get the requested data from the CAN bus. In this case you should check the Serial output of the ESP32 for more details.
 
 #### Titlebar
 ![Title bar](assets/images/appTitleBar.jpg)
 
-In the title bar you can change the select the bluetooth device with 🔗, see the bluetooth connection status "Connected" or "Disconnected", reset the esp32 ♺ or open the [info screen](#info-screen) with with ⚙
+In the title bar you can change the select the bluetooth device with 🔗, see the bluetooth connection status "Connected" or "Disconnected", reset the ESP32 ♺ or open the [info screen](#info-screen) with with ⚙
 
 #### Dashboard Base
 ![Dashboard 0](assets/images/appDash0.jpg)
 
-The "12V battery" value is measured by the esp32 directly
+The "12V battery" value is measured by the ESP32 directly
 #### Dashboard Speed
 ![Dashboard 1](assets/images/appDash1.jpg)
 
