@@ -1,7 +1,7 @@
 /*
  * Project: id3esp32obd2 (Ding19)
  * DIY OBD2 Bluetooth dongle for an VW ID.3
- * An ESP32 is used to forward the following VW ID.3 diagnostics data from the OBD2 connector via Bluetooth to an android mobile phone:
+ * An ESP32 is used to forward the following VW ID.3 diagnostics data from the OBD2 connector via Bluetooth to an android device:
  * - SOC (BMS)
  * - Car operation mode
  * - ODOMETER
@@ -35,10 +35,10 @@
  * - VW ID.3 Car (Code was developed and tested on a ID.3 Pro S)
  * - Two resistors (470k, 100k) for a voltage divider to measure the 12V car battery voltage on an ESP32 analog pin 
  * - LM2596 Step down voltage converter (to convert the 12V car battery to 3.3V as a power supply for the ESP32)
- * - Android mobile phone with the selfmade app: id3esp32obd2 (https://github.com/codingABI/id3esp32obd2/id3esp32obd2.apk)
+ * - Android device with the self-made app: id3esp32obd2 (https://github.com/codingABI/id3esp32obd2/id3esp32obd2.apk)
  *  
  * Power consumption:
- * - 0.6W (0.3W when mobile phone is not connected)
+ * - 0.6W (0.3W when no android device is connected)
  *  
  * VW ID.3 OBD2 connector characteristics (without anything plugged in):
  * - 70 Ohm between CANHigh and CANLow
@@ -215,13 +215,13 @@ void btCallback(esp_spp_cb_event_t event, esp_spp_cb_param_t *param) {
       if (i < 5) Serial.print(":"); else Serial.println();
     }
     beep(SHORTBEEP);
-    if ( // Send data only to the mobile phone defined in secrets.h
-      (param->srv_open.rem_bda[0] == g_macMobilePhone[0]) && 
-      (param->srv_open.rem_bda[1] == g_macMobilePhone[1]) &&
-      (param->srv_open.rem_bda[2] == g_macMobilePhone[2]) &&
-      (param->srv_open.rem_bda[3] == g_macMobilePhone[3]) &&
-      (param->srv_open.rem_bda[4] == g_macMobilePhone[4]) &&
-      (param->srv_open.rem_bda[5] == g_macMobilePhone[5])
+    if ( // Send data only to the android device defined in secrets.h
+      (param->srv_open.rem_bda[0] == g_macMobileDevice[0]) && 
+      (param->srv_open.rem_bda[1] == g_macMobileDevice[1]) &&
+      (param->srv_open.rem_bda[2] == g_macMobileDevice[2]) &&
+      (param->srv_open.rem_bda[3] == g_macMobileDevice[3]) &&
+      (param->srv_open.rem_bda[4] == g_macMobileDevice[4]) &&
+      (param->srv_open.rem_bda[5] == g_macMobileDevice[5])
     ) { 
       g_btAuthenticated = true;
       g_VINdone = false;
