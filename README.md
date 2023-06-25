@@ -61,7 +61,7 @@ The ESP32 waits for the "allowed" Android device connecting via Bluetooth (The "
 **WARNING**
 Do not lock the car without disconnecting the Bluetooth connection or power off the device by the toggle switch S1, because the VW ID3 may triggers a car alarm, if CAN requests are received in a locked state. 
 
-The id3esp32obd2 waits 500ms between each CAN bus request, because I got weired responses when sending requests too quickly one after the other.
+The id3esp32obd2 waits 500ms between each CAN bus request, because I got weired responses when sending requests too quickly.
 
 All components are soldered on two pieces perfboard (I had no single perfboard big enough) and the ESP32 is stacked over the SN65HVD230 and the buzzer.
 
