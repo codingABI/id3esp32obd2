@@ -1,6 +1,8 @@
 # id3esp32obd2
 The id3esp32odb2 is a esp32 based DIY bluetooth dongle to show diagnostics data from a VW ID.3 car on an android device.
 
+![Overview](assets/images/overview.png)
+
 The following diagnostics data values are supported:
 - SOC (BMS)
 - Car operation mode
