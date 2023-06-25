@@ -38,7 +38,7 @@ This project is licensed under the terms of the 2-Clause BSD License [Copyright 
 - LM2596 Step down voltage converter (to convert the 12V car battery to 3.3V as a power supply for the ESP32)
 - Android device with the self-made app: id3esp32obd2 (https://github.com/codingABI/id3esp32obd2/id3esp32obd2.apk)
 
-Power consumption: 0.6W (0.3W when android device is not connected), 0W when powered off by the toggle switch J1
+Power consumption: 0.6W (0.3W when android device is not connected), 0W when powered off by the toggle switch S1
 ### OBD2 and power supply
 The VW ID3 has an ODB2 female connector below the steering wheel:
 
@@ -48,7 +48,7 @@ The id3esp32obd2 uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to p
 
 ![OBD2 connector male](assets/images/obd2ConnectorMale.jpg)
 
-The 12V line can be switch on and off with a toggle switch J1.
+The 12V line can be switch on and off with a toggle switch S1.
 ### Device description
 An ESP32 has builtin support for the CAN bus, but needs an additional CAN transceiver. The ESP32 based id3esp32obd2 uses a SN65HVD230 CAN transceiver. 
 
@@ -59,7 +59,7 @@ The red marked 60 Ohm resistor R2 between CANHigh and CANLow was removed.
 The ESP32 waits for the "correct" android device connecting via Bluetooth (The "correct" android device can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the "correct" android device the ESP32 requests CAN data and forwards the response via Bluetooth. When the android device disconnects the Bluetooth connection the CAN requests will be stopped.
 
 **WARNING**
-Do not lock the car without disconnecting the Bluetooth connection or power off the device by the toggle switch J1, because the VW ID3 may triggers a car alarm, if CAN requests are received in a locked state. 
+Do not lock the car without disconnecting the Bluetooth connection or power off the device by the toggle switch S1, because the VW ID3 may triggers a car alarm, if CAN requests are received in a locked state. 
 
 The id3esp32obd2 waits 500ms between each CAN bus request, because I got weired responses when sending requests too quickly one after the other.
 
@@ -69,7 +69,7 @@ All components are soldered on two pieces perfboard (I had no single perfboard b
 
 ![Device without case](assets/images/Device.jpg)
 
-The toggle switch J1 to power on/off the device in mounted on a wooden, black painted clothespeg and can be sticked on a the ventilation grille in the car. The unused pins of the OBD2 cable are protected by heat shrinking tubes.
+The toggle switch S1 to power on/off the device in mounted on a wooden, black painted clothespeg and can be sticked on a the ventilation grille in the car. The unused pins of the OBD2 cable are protected by heat shrinking tubes.
 
 ![Device with open case](assets/images/DeviceWithOpenCase.jpg)
 
