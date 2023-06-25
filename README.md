@@ -87,7 +87,7 @@ The code for the ESP32 was written with the Arduino IDE and can be found in the 
 The voltage devider R1/R2 is used to measure the 12V car battery voltage with an ESP32 analog pin.
 
 ### Android App
-To show the ID3 diagnostics data sent by the device via Bluetooth an android device with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code: [App source code](id3esp32obd2.aia)) for this project and was tested on a Samsung Galaxy S10 5G with Android 12. To install the apk file you have to temporary allow the installation (Samsung: Settings->Apps->Top right dots...->Special access->Install unknown app).
+To show the VW ID.3 diagnostics data sent by the device via Bluetooth an android device with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code: [App source code](id3esp32obd2.aia)) for this project and was tested on a Samsung Galaxy S10 5G with Android 12. To install the apk file you have to temporary allow the installation (Samsung: Settings->Apps->Top right dots...->Special access->Install unknown app).
 
 #### Bluetooth pairing and selecting the device
 Before you can use the app, you have to pair the android device with the id3esp32obd2 device listed as "id3esp32obd2" in your android Bluetooth management.
