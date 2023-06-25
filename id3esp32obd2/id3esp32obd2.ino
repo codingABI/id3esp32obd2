@@ -1,16 +1,16 @@
 /*
  * Project: id3esp32obd2 (Ding19)
- * DIY OBD2 bluetooth dongle for an VW ID.3
- * An ESP32 is used to forward the following VW ID.3 diagnostics data from the OBD2 connector via bluetooth to an android mobile phone:
+ * DIY OBD2 Bluetooth dongle for an VW ID.3
+ * An ESP32 is used to forward the following VW ID.3 diagnostics data from the OBD2 connector via Bluetooth to an android mobile phone:
  * - SOC (BMS)
  * - Car operation mode
  * - ODOMETER
  * - VIN
  * - Speed
  * - Driving mode position
- * - HV auxilary consumer power
+ * - HV auxiliary consumer power
  * - HV battery main temperature
- * - HV battery cirkulation pump 
+ * - HV battery circulation pump 
  * - HV battery voltage
  * - HV battery current
  * - HV dynamic limit for charging
@@ -84,7 +84,7 @@
 #define ISOTP_flowControlFrame_0x3 0x3
 #define ISOTP_functionalRequests_0x18DB33F1 0x18DB33F1
 
-// Car parameters, that can sent by bluetooth 
+// Car parameters, that can sent by Bluetooth 
 enum dataIDs { 
   idNOP,
   idSOCBMS, 
@@ -106,7 +106,7 @@ enum dataIDs {
   idHVCAPACITY  
 };
 
-// A dashboard is a set of car parameters. A bluetooth client can request a dashboard.
+// A dashboard is a set of car parameters. A Bluetooth client can request a dashboard.
 enum dashboards { 
   DEFAULTDASHBOARD,
   SPEEDDASHBOARD,
@@ -123,7 +123,7 @@ enum dashboards {
 #define CTX_PIN GPIO_NUM_19
 #define CRX_PIN GPIO_NUM_18
 
-// Classic bluetooth
+// Classic Bluetooth
 BluetoothSerial g_SerialBT;
 
 // Receive buffer (multi frames can have a length up to 4095 bytes)
@@ -131,7 +131,7 @@ BluetoothSerial g_SerialBT;
 byte g_dataBuffer[MAXBUFFER];
 long g_dataBufferLength; // Length of payload in receive buffer
 
-bool g_btAuthenticated = false; // Is it allowed to send data via bluetooth?
+bool g_btAuthenticated = false; // Is it allowed to send data via Bluetooth?
 bool g_VINdone = false; // VIN already received?
 byte g_requestDashboard = DEFAULTDASHBOARD; // Default dashboard
 
@@ -233,7 +233,7 @@ void btCallback(esp_spp_cb_event_t event, esp_spp_cb_param_t *param) {
   }
 }
 
-// Check commands received via bluetooth
+// Check commands received via Bluetooth
 void checkBTReceive() {
   byte received;
   while (g_SerialBT.available()) {
@@ -253,7 +253,7 @@ void setup() {
   pinMode(LED_PIN,OUTPUT);
   pinMode(MEASURE12V_PIN,INPUT);
   
-  // Reduce cpu speed to reduce power consumption (Serial.print and bluetooth does not work below 80 MHz)
+  // Reduce cpu speed to reduce power consumption (Serial.print and Bluetooth does not work below 80 MHz)
   setCpuFrequencyMhz(80);
 
   // Init CAN
@@ -275,10 +275,10 @@ void setup() {
   // Clear receive buffer
   clearBuffer();
 
-  // Init classic bluetooth 
+  // Init classic Bluetooth 
   g_SerialBT.register_callback(btCallback);
   if (!g_SerialBT.begin(BTDEVICENAME)) {
-    Serial.println("Can not enable bluetooth");
+    Serial.println("Can not enable Bluetooth");
   } else {
     Serial.print("Bluetooth ready at ");
     Serial.println(g_SerialBT.getBtAddressString());    
@@ -294,10 +294,10 @@ void loop() {
 //delay(32000);
 //return;
 
-  // Check bluetooth before checking g_btAuthenticated to process the receive queue anyway
+  // Check Bluetooth before checking g_btAuthenticated to process the receive queue anyway
   checkBTReceive();
   if (!g_SerialBT.hasClient() && g_btAuthenticated) {
-    Serial.println("No bluetooth client connected");
+    Serial.println("No Bluetooth client connected");
     g_btAuthenticated = false;
   }
   if (!g_btAuthenticated) return;
