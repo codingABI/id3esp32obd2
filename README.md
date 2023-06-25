@@ -32,7 +32,7 @@ This project is licensed under the terms of the 2-Clause BSD License [Copyright 
 ### Hardware
 - ESP-WROOM-32 NodeMCU (Board manager: ESP32 Dev Model)
 - SN65HVD230 CAN transceiver (60 Ohm resistor R2 between CANHigh and CANLow was removed)
-- OBD2 Connector cable (Plugged in to the OBD2 port below the steering wheel)
+- OBD2 Connector cable (Plugged in to the OBD2 female port below the steering wheel)
 - VW ID.3 Car (Code was developed and tested on a ID.3 Pro S)
 - Two resistors (470k, 100k) for a voltage divider to measure the 12V car battery voltage on an ESP32 analog pin 
 - LM2596 Step down voltage converter (to convert the 12V car battery to 3.3V as a power supply for the ESP32)
