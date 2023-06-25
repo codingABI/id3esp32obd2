@@ -50,7 +50,7 @@ The id3esp32obd2 uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to p
 
 The 12V line can be switch on and off with a toggle switch.
 ### Device description
-An ESP32 has builtin support for the CAN bus, but needs an additional CAN transceiver. The id3esp32obd2 uses a SN65HVD230 CAN transceiver. 
+An ESP32 has builtin support for the CAN bus, but needs an additional CAN transceiver. The ESP32 based id3esp32obd2 uses a SN65HVD230 CAN transceiver. 
 
 ![SN65HVD230 removed resistor](assets/images/SN65HVD230.jpg)
 
