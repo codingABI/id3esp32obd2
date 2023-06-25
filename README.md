@@ -15,16 +15,21 @@ The id3esp32obd2 uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to p
 
 The 12V line can be switch on and off with a toggle switch.
 ### Device description
-An esp32 has builtin support for the CAN bus, but needs an additional CAN tranceiver. This device uses a SN65HVD230 CAN transceiver (The 60 Ohm resistor R2 between CANHigh and CANLow was removed). The esp32 waits for the "right" mobile phone connecting via bluetooth (The "right" mobile phone can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the "right" mobile phone the esp32 requests CAN data and forwards the response via bluetooth. When the mobile phone disconnects the bluetooth connection the CAN requests will be stopped.
+An esp32 has builtin support for the CAN bus, but needs an additional CAN tranceiver. The id3esp32obd2 uses a SN65HVD230 CAN transceiver. 
+
+![SN65HVD230 remmoved resistor](assets/images/SN65HVD230.jpg)
+
+The red marked 60 Ohm resistor R2 between CANHigh and CANLow was removed. 
+
+The esp32 waits for the "right" mobile phone connecting via bluetooth (The "right" mobile phone can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the "right" mobile phone the esp32 requests CAN data and forwards the response via bluetooth. When the mobile phone disconnects the bluetooth connection the CAN requests will be stopped.
 
 **WARNING**
 Do not lock the car without disconnecting the bluetooth connection or power off the device by the toggle switch, because the VW ID3 may triggers a car alarm, if CAN requests are received in a locked state. 
- 
+
+The id3esp32obd2 waits 500ms between each CAN bus request, because I got weired responses when sending requests too quickly one after the other.
+
+All components are soldered on two pieces perfboard (I had no single perfboard big enough) and the esp32 is stacked over the SN65HVD230 and the buzzer.
 ![Perfboard](assets/images/Perfboard.jpg)
-
-![Schematic](assets/images/Schematic.png)
-
-[Arduino-Sketch](/id3esp32obd2/id3esp32obd2.ino)
 
 ![Device without case](assets/images/Device.jpg)
 The toggle switch to power on/off the device in mounted on a wooden, black painted clothespeg and can be sticked on a the ventilation grille in the car. The unused pins of the OBD2 cable are protected by heat shrinking tubes.
@@ -34,6 +39,13 @@ Wooden self-made case.
 
 ![Device with case](assets/images/DeviceWithCase.jpg)
 The window in the case is to show the builtin leds of the esp32.
+### Code
+The code for the esp32 was written with the Arduino IDE and can be found in the [Arduino-Sketch folder](/id3esp32obd2)
+
+### Schematic
+![Schematic](assets/images/Schematic.png)
+
+The volatage device R1/R2 is used to measure the 12V car battery voltage with an esp32 analog pin.
 
 ### Android App
 To show the ID3 diagnostics data sent by the device via bluetooth an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code: [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12. To install the apk file you have to temporary allow the installation (Samsung: Settings->Apps->Top right dots...->Special access->Install unknown app).
