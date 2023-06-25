@@ -1,5 +1,5 @@
 # id3esp32obd2
-The id3esp32odb2 is a esp32 based DIY bluetooth dongle to show diagnostics data from a VW ID.3 car on an android mobile phone.
+The id3esp32odb2 is a esp32 based DIY bluetooth dongle to show diagnostics data from a VW ID.3 car on an android device.
 
 The following diagnostics data values are supported:
 - SOC (BMS)
@@ -34,9 +34,9 @@ This project is licensed under the terms of the 2-Clause BSD License [Copyright 
 - VW ID.3 Car (Code was developed and tested on a ID.3 Pro S)
 - Two resistors (470k, 100k) for a voltage divider to measure the 12V car battery voltage on an ESP32 analog pin 
 - LM2596 Step down voltage converter (to convert the 12V car battery to 3.3V as a power supply for the ESP32)
-- Android mobile phone with the selfmade app: id3esp32obd2 (https://github.com/codingABI/id3esp32obd2/id3esp32obd2.apk)
+- Android device with the selfmade app: id3esp32obd2 (https://github.com/codingABI/id3esp32obd2/id3esp32obd2.apk)
 
-Power consumption: 0.6W (0.3W when mobile phone is not connected)
+Power consumption: 0.6W (0.3W when android device is not connected)
 ### OBD2 and power supply
 The VW ID3 has an ODB2 female connector below the steering wheel:
 
@@ -54,7 +54,7 @@ An esp32 has builtin support for the CAN bus, but needs an additional CAN trance
 
 The red marked 60 Ohm resistor R2 between CANHigh and CANLow was removed. 
 
-The esp32 waits for the "right" mobile phone connecting via bluetooth (The "right" mobile phone can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the "right" mobile phone the esp32 requests CAN data and forwards the response via bluetooth. When the mobile phone disconnects the bluetooth connection the CAN requests will be stopped.
+The esp32 waits for the "right" android device connecting via bluetooth (The "right" android device can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the "right" android device the esp32 requests CAN data and forwards the response via bluetooth. When the android device disconnects the bluetooth connection the CAN requests will be stopped.
 
 **WARNING**
 Do not lock the car without disconnecting the bluetooth connection or power off the device by the toggle switch, because the VW ID3 may triggers a car alarm, if CAN requests are received in a locked state. 
@@ -85,10 +85,10 @@ The code for the esp32 was written with the Arduino IDE and can be found in the 
 The voltage devider R1/R2 is used to measure the 12V car battery voltage with an esp32 analog pin.
 
 ### Android App
-To show the ID3 diagnostics data sent by the device via bluetooth an Android phone with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code: [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12. To install the apk file you have to temporary allow the installation (Samsung: Settings->Apps->Top right dots...->Special access->Install unknown app).
+To show the ID3 diagnostics data sent by the device via bluetooth an android device with the app [id3esp32obd2 app](id3esp32obd2.apk) is needed. This app is a small app made with https://appinventor.mit.edu/ (Source code: [App source code](id3esp32obd2.aia)) and was tested on a Samsung Galaxy S10 5G with Android 12. To install the apk file you have to temporary allow the installation (Samsung: Settings->Apps->Top right dots...->Special access->Install unknown app).
 
 #### Bluetooth pairing and selecting the device
-Before you can use the app, you have to pair the phone with the device listed as "id3esp32obd2" in your android bluetooth management.
+Before you can use the app, you have to pair the android device with the id3esp32obd2 device listed as "id3esp32obd2" in your android bluetooth management.
 
 After launching the app, you have to connect to the previously paired bluetooth device by pressing 🔗 to open the list "Bluetooth device" and select "aa:bb... id3esp32obd2" (aa:bb... would be the MAC address of your esp32). To manually disconnect an existing connection you can select "Disconnect" in the list "Bluetooth device". 
 
