@@ -289,11 +289,6 @@ void setup() {
 }
 
 void loop() {
-
-//requestDashboardTest();
-//delay(32000);
-//return;
-
   // Check Bluetooth before checking g_btAuthenticated to process the receive queue anyway
   checkBTReceive();
   if (!g_SerialBT.hasClient() && g_btAuthenticated) {
