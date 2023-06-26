@@ -67,6 +67,8 @@ All components are soldered on two pieces perfboard (I had no single perfboard b
 
 ![Perfboard](assets/images/Perfboard.jpg)
 
+![Perfboard backside](assets/images/PerfboardBackside.jpg)
+
 ![Device without case](assets/images/Device.jpg)
 
 The toggle switch S1 to power on/off the device in mounted on a wooden, black painted clothespeg and can be sticked on a the ventilation grille in the car. The unused pins of the OBD2 cable are protected by heat shrinking tubes.
