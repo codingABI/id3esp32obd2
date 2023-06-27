@@ -3,6 +3,8 @@ The *id3esp32obd2* is a ESP32 based DIY Bluetooth dongle and an Android app to s
 
 ![Overview](assets/images/Overview.png)
 
+See device on [YouTube](https://youtu.be/9KG8uuSZGIE)
+
 The following diagnostics data values are supported at the moment:
 - SOC (BMS)
 - Car operation mode
