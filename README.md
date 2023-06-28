@@ -1,5 +1,5 @@
 # id3esp32obd2
-The *id3esp32obd2* is an ESP32 based DIY Bluetooth dongle and an Android app to show diagnostics data from a VW ID.3 car on an Android device.
+The *id3esp32obd2* is an ESP32 based DIY OBD2 Bluetooth dongle and an Android app to show diagnostics data from a VW ID.3 car on an Android device.
 
 ![Overview](assets/images/Overview.png)
 
