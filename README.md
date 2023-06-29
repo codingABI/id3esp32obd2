@@ -99,12 +99,12 @@ Before you can use the app, you have to pair the Android device with the *id3esp
 After launching the app, you have to connect to the previously paired Bluetooth device by pressing 🔗 to open the list "Bluetooth device" and select *"aa:bb... id3esp32obd2"* (*aa:bb...* would be the MAC address of your ESP32). To manually disconnect an existing connection you can select *"Disconnect"* in the list "Bluetooth device". Next time you start the app again, the connection to the last selected Bluetooth device will be restored automatically.
 
 #### General usage
-In the app you can switch between several dashboards with the left ⇦ and right ⇨ buttons. When you move to another dashboard it could take up to 1.5 seconds to receive first data for the new dashboard and it could take several seconds to receive all dashboard data. When you receive *"ERR"* all the time the device could not get the requested data from the CAN bus. In this case you should check the Serial output of the ESP32 for more details.
+In the app you can switch between several dashboards with the left ⇦ and right ⇨ buttons. When you move to another dashboard it could take up to 1.5 seconds to receive first data for the new dashboard and it could take several seconds to receive all dashboard data. When you receive *"ERR"* all the time, the device could not get the requested data from the CAN bus. In this case you should check the Serial output of the ESP32 for more details.
 
 #### Titlebar
 ![Title bar](assets/images/appTitleBar.jpg)
 
-In the title bar you can change the selected Bluetooth "id3esp32obd2" device with 🔗, view the Bluetooth connection status *"Connected"* or *"Disconnected"*, reset the ESP32 with ♺ or open the [info screen](#info-screen) with with ⚙
+In the title bar you can change the selected *id3esp32obd2* Bluetooth device with 🔗, see the Bluetooth connection status *"Connected"* or *"Disconnected"*, reset the ESP32 with ♺ or open the [info screen](#info-screen) with with ⚙
 
 #### Dashboard Base
 ![Dashboard 0](assets/images/appDash0.jpg)
