@@ -58,7 +58,7 @@ An ESP32 has a builtin CAN controller, but needs an additional CAN transceiver. 
 
 The red marked 60 Ohm resistor R2 between CANHigh and CANLow was removed. 
 
-The ESP32 waits for the *"allowed"* Android device connecting via Bluetooth (The *"allowed"* Android device can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the *"allowed"* Android device the ESP32 requests CAN data and forwards the response via Bluetooth. While the *allowed* Android device is connected the blue, ESP32 builtin led is enabled. When the Android device disconnects the Bluetooth connection the CAN requests will be stopped.
+The ESP32 waits for the *"allowed"* Android device connecting via Bluetooth (The *"allowed"* Android device can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the *"allowed"* Android device the ESP32 requests CAN data and forwards the response via Bluetooth. While the *allowed* Android device is connected the blue, ESP32 builtin led (Pin 2) is enabled. When the Android device disconnects the Bluetooth connection the CAN requests will be stopped.
 
 **WARNING**
 Do not lock the car without disconnecting the Bluetooth connection or power off the device by the toggle switch S1, because the VW ID.3 may triggers a car alarm, if CAN requests are received in a locked state. 
@@ -81,7 +81,7 @@ The *id3esp32obd2* is in a wooden self-made case.
 
 ![Device with case](assets/images/DeviceWithCase.jpg)
 
-The window in the case is to show the builtin leds of the ESP32.
+The window in the case is to show the builtin leds (Blue led on pin 2 and red power led) of the ESP32.
 ### Code
 The code for the ESP32 was written with the Arduino IDE and can be found in the [Arduino-Sketch folder](/id3esp32obd2)
 
