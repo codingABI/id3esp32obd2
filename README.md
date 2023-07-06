@@ -109,7 +109,7 @@ In the title bar you can change the selected *id3esp32obd2* Bluetooth device wit
 #### Dashboard: Base
 ![Dashboard 0](assets/images/appDash0.jpg)
 
-The "12V battery" value is measured by the ESP32 directly
+The "12V battery" value is measured by the ESP32 directly and the "Compile time" shows the firmware compile time for the ESP32.
 #### Dashboard: Speed
 ![Dashboard 1](assets/images/appDash1.jpg)
 
