@@ -106,17 +106,17 @@ In the app you can switch between several dashboards with the left ⇦ and right
 
 In the title bar you can change the selected *id3esp32obd2* Bluetooth device with 🔗, see the Bluetooth connection status *"Connected"* or *"Disconnected"*, reset the ESP32 with ♺ or open the [info screen](#info-screen) with with ⚙
 
-#### Dashboard Base
+#### Dashboard: Base
 ![Dashboard 0](assets/images/appDash0.jpg)
 
 The "12V battery" value is measured by the ESP32 directly
-#### Dashboard Speed
+#### Dashboard: Speed
 ![Dashboard 1](assets/images/appDash1.jpg)
 
 Shows the current car speed
-#### Dashboard HV Battery
+#### Dashboard: HV Battery
 ![Dashboard 2](assets/images/appDash2.jpg)
-#### Dashboard Charge/Discharge
+#### Dashboard: Charge/Discharge
 ![Dashboard 3](assets/images/appDash3.jpg)
 
 You can reset the delta/differential values with ♺ right to the value
