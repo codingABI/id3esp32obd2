@@ -116,9 +116,11 @@ The "12V battery" value is measured by the ESP32 directly and the "Compile time"
 Shows the current car speed
 #### Dashboard: HV Battery
 ![Dashboard 2](assets/images/appDash2.jpg)
+
+Values mainly for the high voltage HV battery.
 #### Dashboard: Charge/Discharge
 ![Dashboard 3](assets/images/appDash3.jpg)
 
-You can reset the delta/differential values with ♺ right to the value
+Mixed dashboard to collect data for power consumption. You can reset the delta/differential values with ♺ right to the value.
 #### Info screen
 ![App info screen](assets/images/appInfoScreen.jpg)
