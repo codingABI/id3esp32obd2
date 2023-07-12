@@ -210,14 +210,13 @@ void readAndSendHVTotalChargeDischarge() {
 
   if (sendUDSRequest(0x17fc007B,UDS_ReadDataByIdentifier_0x22,0x1E,0x32)) {
     Serial.print("Total charge/discharge : ");
-    Serial.print(buffer2unsignedLong(8,4)/8583.07123641215f);
-    // google for 8583.07123641215 shows, that it seems to be something VW special
+    Serial.print(buffer2unsignedLong(8,4)/8583.07f);
     Serial.print(" ");
-    Serial.println(fabs((long) buffer2unsignedLong(12,4)/8583.07123641215f));
+    Serial.println(fabs((long) buffer2unsignedLong(12,4)/8583.07f));
     
-    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idHVTOTALCHARGE,buffer2unsignedLong(8,4)/8583.07123641215f);
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idHVTOTALCHARGE,buffer2unsignedLong(8,4)/8583.07f);
     g_SerialBT.write((byte*)strData,strlen(strData)+1); 
-    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idHVTOTALDISCHARGE,fabs((long) buffer2unsignedLong(12,4)/8583.07123641215f));
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idHVTOTALDISCHARGE,fabs((long) buffer2unsignedLong(12,4)/8583.07f));
     g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idHVTOTALCHARGE);
