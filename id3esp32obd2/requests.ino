@@ -3,7 +3,6 @@
  * Copyright (c) 2023 codingABI
  */
 
-
 /* Car operation mode
  *  
  * Example:
