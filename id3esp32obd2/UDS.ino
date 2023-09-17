@@ -165,6 +165,10 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
             case UDS_ServiceNotSupported_0x11:
               Serial.println("0x11 service not supported");
               break;
+            case UDS_ResponsePending_0x78:
+              Serial.println("0x78 request correctly received but response pending");
+              continue; // No error, response should be received later
+              break;
             default:
               Serial.println(rxMessage.data[3],HEX); 
           }
@@ -240,7 +244,7 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
       fcMessage.data[5] = 0x00;
       fcMessage.data[6] = 0x00;
       fcMessage.data[7] = 0x00;  
-      Serial.print("Send ");
+      Serial.print("Send    ");
       showMessage(&fcMessage);  
       Serial.println();
       error = can_transmit(&fcMessage, pdMS_TO_TICKS(CAN_SEND_TIMEOUT));

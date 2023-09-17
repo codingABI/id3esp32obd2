@@ -17,6 +17,16 @@
  * - HV Total charge
  * - HV Total discharge
  * - HV battery capacity
+ * - HV PTC heater current
+ * - Outside temperature
+ * - Inside temperature
+ * - Cruising range
+ * - Charging state
+ * - CO2 content interior
+ * - GPS time
+ * - GPS height
+ * - GPS latitude
+ * - GPS longitude
  * 
  * License: 2-Clause BSD License
  * Copyright (c) 2023 codingABI
@@ -52,6 +62,11 @@
  * https://github.com/nickn17/evDash/blob/master/src/CarVWID3.cpp
  * https://github.com/spot2000/Volkswagen-MEB-EV-CAN-parameters/blob/main/VW%20MEB%20UDS%20PIDs%20list.csv
  * https://www.meinid.com/thread/1640-obd2-header-pid-liste/
+ * 
+ * History: 
+ * 20230626, Initial version
+ * 20230712, Add support for "PTC heater current", "Outside temperature", "Inside temperature", "Cruising range", "Charging state", "CO2 content interior"
+ * 20230719, Add support for "GPS time", "GPS height", "GPS latitude" and "GPS longitude", Sync ESP32 time with "GPS Time"
  */
 
 #include <driver/gpio.h>
@@ -74,6 +89,7 @@
 #define UDS_DiagnosticSessionControl_0x10 0x10
 #define UDS_ExtendedDiagnosticSession_0x03 0x03
 #define UDS_RequestOutOfRange_0x31 0x31
+#define UDS_ResponsePending_0x78 0x78
 #define UDS_ServiceNotSupported_0x11 0x11
 #define UDS_NegativeResponse_0x7f 0x7f
 #define UDS_PositiveResponseOffset_0x40 0x40
@@ -103,7 +119,17 @@ enum dataIDs {
   idHVCHARGINGLIMIT,
   idHVTOTALCHARGE,
   idHVTOTALDISCHARGE,
-  idHVCAPACITY  
+  idHVCAPACITY,
+  idPTCHEATERCURRENT,
+  idTEMPERATUREOUTSIDE,
+  idTEMPERATUREINSIDE,
+  idCRUISINGRANGE,
+  idCHARGINGSTATE,
+  idCO2CONTENTINTERIOR,
+  idGPSTIME,
+  idGPSELE,
+  idGPSLAT,
+  idGPSLON
 };
 
 // A dashboard is a set of car parameters. A Bluetooth client can request a dashboard.
@@ -111,8 +137,12 @@ enum dashboards {
   DEFAULTDASHBOARD,
   SPEEDDASHBOARD,
   HVDASHBOARD,
-  MYDASHBOARD
+  MYDASHBOARD,
+  GPSDASHBOARD
 };
+
+// Timezone for Germany
+#define TIMEZONE "CET-1CEST,M3.5.0/02,M10.5.0/03" 
 
 // Pin definitions
 #define LED_PIN 2
@@ -202,6 +232,35 @@ void beep(int type=DEFAULTBEEP) {
   }
 }
 
+// Set time of esp
+void setEspTime(char *strTime) { 
+  #define MAXSTRDATALENGTH 80
+  char strData[MAXSTRDATALENGTH+1];
+  struct tm t;
+  struct tm *ptrTimeinfo;
+  time_t now;
+
+  if (strTime == NULL) return;
+  setenv("TZ", "UTC+0", 1); // New time is in UTC
+  tzset();
+  if (strptime(strTime,"%Y-%m-%d %H:%M:%S", &t) != NULL) {
+    time_t t_of_day = mktime(&t);
+    struct timeval epoch;
+    epoch.tv_sec = t_of_day; // epoch time (seconds)
+    epoch.tv_usec = 0; // microseconds     
+    settimeofday((const timeval*)&epoch, 0);
+  }
+    
+  setenv("TZ", TIMEZONE, 1); // Change TZ back to local TZ
+  tzset();
+
+  time(&now);
+  ptrTimeinfo = localtime( &now );
+  strftime(strData, MAXSTRDATALENGTH+1, "%Y-%m-%d %H:%M:%S", ptrTimeinfo);
+  Serial.print("ESP32 local time: ");
+  Serial.println(strData);
+}
+
 // Bluetooth callback function
 void btCallback(esp_spp_cb_event_t event, esp_spp_cb_param_t *param) {
   #define MAXSTRDATALENGTH 80
@@ -249,6 +308,10 @@ void checkBTReceive() {
 void setup() {
   Serial.begin(115200);
 
+  // Timezone
+  setenv("TZ", TIMEZONE, 1);
+  tzset();
+
   // Pin modes
   pinMode(LED_PIN,OUTPUT);
   pinMode(MEASURE12V_PIN,INPUT);
@@ -289,6 +352,7 @@ void setup() {
 }
 
 void loop() {
+
   // Check Bluetooth before checking g_btAuthenticated to process the receive queue anyway
   checkBTReceive();
   if (!g_SerialBT.hasClient() && g_btAuthenticated) {
@@ -313,6 +377,9 @@ void loop() {
       break;    
     case MYDASHBOARD:
       requestMyDashboard(g_requestDashboard);
+      break;    
+    case GPSDASHBOARD:
+      requestGPSDashboard(g_requestDashboard);
       break;    
     default:
       Serial.print("Unknown dashboard requested ");

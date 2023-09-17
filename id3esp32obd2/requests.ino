@@ -36,11 +36,10 @@ void readAndSendCarMode() {
         Serial.println(g_dataBuffer[0]);
         snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idCARMODE,g_dataBuffer[0]);
     }
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idCARMODE);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
 }
 
 /* Speed
@@ -57,11 +56,10 @@ void readAndSendSpeed() {
     Serial.print("Speed in km/h: ");
     Serial.println(g_dataBuffer[0]); 
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idSPEED,g_dataBuffer[0]);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idSPEED);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
 }
 
 /* Driving mode position (P-N-D-B)
@@ -101,11 +99,10 @@ void readAndSendDrivingMode() {
         Serial.println(g_dataBuffer[1]);
         snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idDRIVINGMODE,g_dataBuffer[1]);
     }
-    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idDRIVINGMODE);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
 }
 
 /* HV auxilary consumer power
@@ -122,11 +119,10 @@ void readAndSendHVAuxilaryPower() {
     Serial.print("HV auxilary consumer power in kW: ");
     Serial.println(buffer2unsignedLong()/10.0f);  
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.2f",idAUXPOWER,buffer2unsignedLong()/10.0f);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);  
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idAUXPOWER);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
 }
 
 /* HV battery main temperature
@@ -143,11 +139,10 @@ void readAndSendHVMainTemperature() {
     Serial.print("HV battery main temperature in °C: ");
     Serial.println((g_dataBuffer[0]/2.0f) - 40);
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idBATTEMPERATURE,(g_dataBuffer[0]/2.0f) - 40);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idBATTEMPERATURE);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
 }
 
 /* Circulation pump HV battery
@@ -164,11 +159,10 @@ void readAndSendHVCirculationPump() {
     Serial.print("Circulation pump in %: ");
     Serial.println(g_dataBuffer[0]);
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idHVCIRCULATIONPUMP,g_dataBuffer[0]);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idHVCIRCULATIONPUMP);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
 }
 
 /* Dynamic limit for charging in ampere
@@ -185,11 +179,10 @@ void readAndSendHVDynamicChargeLimit() {
     Serial.print("Dynamic limit for charging in A: ");
     Serial.println(buffer2unsignedLong()/5.0f);
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idHVCHARGINGLIMIT,buffer2unsignedLong()/5.0f);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idHVCHARGINGLIMIT);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
 }
 
 /* HV total charge/discharge
@@ -198,7 +191,7 @@ void readAndSendHVDynamicChargeLimit() {
  * 21:59:19.931 -> Send    ID: 17FC007B Flags:1 Length:8 Data:03 22 1E 32 00 00 00 00 
  * 21:59:19.978 -> Receive ID: 17FE007B Flags:1 Length:8 Data:10 13 62 1E 32 00 15 C8 
  * 21:59:19.978 -> Multi frame with size 19
- * 21:59:19.978 -> Send ID: 17FC007B Flags:1 Length:8 Data:30 00 00 00 00 00 00 00 
+ * 21:59:19.978 -> Send    ID: 17FC007B Flags:1 Length:8 Data:30 00 00 00 00 00 00 00 
  * 21:59:19.978 -> Expect 2 frames
  * 21:59:19.978 -> Next receive ID: 17FE007B Flags:1 Length:8 Data:21 C1 FF EA D9 E6 00 7C 
  * 21:59:19.978 -> Next receive ID: 17FE007B Flags:1 Length:8 Data:22 33 68 FF 8A 00 1B AA 
@@ -239,11 +232,10 @@ void readAndSendHVCapacity() {
     Serial.print("HV battery capacity in kWh: ");
     Serial.println(buffer2unsignedLong()/1310.77f/1000.0f);
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idHVCAPACITY,buffer2unsignedLong()/1310.77f/1000.0f);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idHVCAPACITY);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1); 
 }
 
 /* VIN number of car (from engine ECU)
@@ -252,7 +244,7 @@ void readAndSendHVCapacity() {
  * 11:55:44.316 -> Send    ID: 17FC0076 Flags:1 Length:8 Data:03 22 F8 02 00 00 00 00 
  * 11:55:44.316 -> Receive ID: 17FE0076 Flags:1 Length:8 Data:10 14 62 F8 02 57 56 57 
  * 11:55:44.316 -> Multi frame with size 20
- * 11:55:44.316 -> Send ID: 17FC0076 Flags:1 Length:8 Data:30 00 00 00 00 00 00 00 
+ * 11:55:44.316 -> Send    ID: 17FC0076 Flags:1 Length:8 Data:30 00 00 00 00 00 00 00 
  * 11:55:44.316 -> Expect 2 frames
  * 11:55:44.316 -> Next receive ID: 17FE0076 Flags:1 Length:8 Data:22 5A 5A 5A ... 
  * 11:55:44.316 -> Next receive ID: 17FE0076 Flags:1 Length:8 Data:29 50 32 33 ...
@@ -267,12 +259,11 @@ void readAndSendVIN() {
       g_dataBuffer[MAXBUFFER-1]=0; // Make sure that strings terminate
       Serial.println((char*)g_dataBuffer);
       snprintf(strData,MAXSTRDATALENGTH+1,"%i|%s",idVIN,(char*)g_dataBuffer);
-      g_SerialBT.write((byte*)strData,strlen(strData)+1); 
       g_VINdone = true;
     } else {
       snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idVIN);
-      g_SerialBT.write((byte*)strData,strlen(strData)+1);    
     }
+    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
 }
 
@@ -290,11 +281,10 @@ void readAndSendSOCBMS() {
     Serial.print("SOC (BMS) in %: ");
     Serial.println(g_dataBuffer[0]/2.5f);
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idSOCBMS,g_dataBuffer[0]/2.5f);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idSOCBMS);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
 }
 
 /* HV battery voltage
@@ -311,11 +301,10 @@ void readAndSendHVBatteryV() {
     Serial.print("HV battery voltage in V: ");
     Serial.println(buffer2unsignedLong()/4.0f);
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idHVBATV,buffer2unsignedLong()/4.0f);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idHVBATV);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
 }
 
 /* HV battery current
@@ -324,7 +313,7 @@ void readAndSendHVBatteryV() {
  * 22:09:13.118 -> Send    ID: 17FC007B Flags:1 Length:8 Data:03 22 1E 3D 00 00 00 00 
  * 22:09:13.165 -> Receive ID: 17FE007B Flags:1 Length:8 Data:10 08 62 1E 3D 00 02 49 
  * 22:09:13.165 -> Multi frame with size 8
- * 22:09:13.165 -> Send ID: 17FC007B Flags:1 Length:8 Data:30 00 00 00 00 00 00 00 
+ * 22:09:13.165 -> Send    ID: 17FC007B Flags:1 Length:8 Data:30 00 00 00 00 00 00 00 
  * 22:09:13.165 -> Expect 1 frames
  * 22:09:13.165 -> Next receive ID: 17FE007B Flags:1 Length:8 Data:21 C8 3F AA AA AA AA AA 
  */
@@ -336,11 +325,10 @@ void readAndSendHVBatteryA() {
     Serial.print("HV battery current in A: ");
     Serial.println((buffer2unsignedLong(0,4)- 150000)/100.0f);
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idHVBATA,((long)buffer2unsignedLong(0,4)- 150000)/100.0f);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idHVBATA);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
   }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1); 
 }
 
 /* ODOMETER
@@ -357,10 +345,272 @@ void readAndSendODOMETER() {
     Serial.print("ODOMETER in km: ");
     Serial.println(buffer2unsignedLong());   
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idODOMETER,buffer2unsignedLong());
-    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   } else {
     snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idODOMETER);
-    g_SerialBT.write((byte*)strData,strlen(strData)+1);    
+  }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+}
+
+/* PTC heater battery current
+ *  
+ * Example:
+ * 17:56:08.165 -> Send    ID: 17FC007B Flags:1 Length:8 Data:03 22 16 20 00 00 00 00 
+ * 17:56:08.165 -> Receive ID: 17FE007B Flags:1 Length:8 Data:04 62 16 20 00 AA AA AA 
+ */
+void readAndSendPTCHeaterCurrent() {
+  #define MAXSTRDATALENGTH 80
+  char strData[MAXSTRDATALENGTH+1];
+
+  if (sendUDSRequest(0x17FC007B,UDS_ReadDataByIdentifier_0x22,0x16,0x20)) {
+    Serial.print("PTC heater battery current in A: ");
+    Serial.println(buffer2unsignedLong());   
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idPTCHEATERCURRENT,buffer2unsignedLong());
+  } else {
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idPTCHEATERCURRENT);
+  }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
+}
+
+/* Outside temperature
+ *  
+ * Example:
+ * 17:56:07.649 -> Send    ID: 746 Flags:0 Length:8 Data:03 22 26 09 00 00 00 00 
+ * 17:56:07.696 -> Receive ID: 7B0 Flags:0 Length:8 Data:04 62 26 09 A6 AA AA AA 
+ */
+void readAndSendTemperatureOutside() {
+  #define MAXSTRDATALENGTH 80
+  char strData[MAXSTRDATALENGTH+1];
+
+  if (sendUDSRequest(0x746,UDS_ReadDataByIdentifier_0x22,0x26,0x09)) {
+    Serial.print("Outside temperature in °C: ");
+    Serial.println((g_dataBuffer[0]/2.0f) - 50);   
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idTEMPERATUREOUTSIDE,(g_dataBuffer[0]/2.0f) - 50);
+  } else {
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idTEMPERATUREOUTSIDE);
+  }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+}
+
+/* Inside temperature
+ *  
+ * Example:
+ * 17:56:07.133 -> Send    ID: 746 Flags:0 Length:8 Data:03 22 26 13 00 00 00 00 
+ * 17:56:07.180 -> Receive ID: 7B0 Flags:0 Length:8 Data:05 62 26 13 00 C8 AA AA 
+ */
+void readAndSendTemperatureInside() {
+  #define MAXSTRDATALENGTH 80
+  char strData[MAXSTRDATALENGTH+1];
+
+  if (sendUDSRequest(0x746,UDS_ReadDataByIdentifier_0x22,0x26,0x13)) {
+    Serial.print("Inside temperature in °C: ");
+    Serial.println((buffer2unsignedLong()/5.0f)-40);   
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%.1f",idTEMPERATUREINSIDE,((long)buffer2unsignedLong()/5.0f)-40);
+  } else {
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idTEMPERATUREINSIDE);
+  }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1);    
+}
+
+/* Cruising range
+ *  
+ * Example:
+ * 17:48:32.688 -> Send    ID: 710 Flags:0 Length:8 Data:03 22 2A B6 00 00 00 00 
+ * 17:48:32.688 -> Receive ID: 77A Flags:0 Length:8 Data:10 0A 62 2A B6 00 B2 00 
+ * 17:48:32.688 -> Multi frame with size 10
+ * 17:48:32.688 -> Send    ID: 710 Flags:0 Length:8 Data:30 00 00 00 00 00 00 00 
+ * 17:48:32.688 -> Expect 1 frames
+ * 17:48:32.688 -> Next receive ID: 77A Flags:0 Length:8 Data:21 B2 00 00 00 AA AA AA 
+ */
+void readAndSendCruisingRange() {
+  #define MAXSTRDATALENGTH 80
+  char strData[MAXSTRDATALENGTH+1];
+
+  if (sendUDSRequest(0x710,UDS_ReadDataByIdentifier_0x22,0x2A,0xB6)) {
+    Serial.print("Cruising range in km: ");
+    Serial.println(buffer2unsignedLong(0,2));   
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idCRUISINGRANGE,buffer2unsignedLong(0,2));
+  } else {
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idCRUISINGRANGE);
+  }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+}
+
+/* Charging state
+ *  
+ * Example:
+ * 17:48:23.031 -> Send    ID: 710 Flags:0 Length:8 Data:03 22 15 D5 00 00 00 00 
+ * 17:48:23.078 -> Receive ID: 77A Flags:0 Length:8 Data:06 62 15 D5 02 00 00 AA 
+ */
+void readAndSendChargingState() {
+  #define MAXSTRDATALENGTH 80
+  char strData[MAXSTRDATALENGTH+1];
+
+  if (sendUDSRequest(0x710,UDS_ReadDataByIdentifier_0x22,0x15,0xD5)) {
+    Serial.print("Charing state: ");
+    switch (g_dataBuffer[0]) {
+      case 0x1:
+        Serial.println("Precondition fulfilled");
+        snprintf(strData,MAXSTRDATALENGTH+1,"%i|Standby charging",idCHARGINGSTATE);
+        break;
+      case 0x2:
+        Serial.println("None");
+        snprintf(strData,MAXSTRDATALENGTH+1,"%i|None",idCHARGINGSTATE);
+        break;
+      case 0x3:
+        Serial.println("Error");
+        snprintf(strData,MAXSTRDATALENGTH+1,"%i|Error",idCHARGINGSTATE);
+        break;
+      case 0x5:
+        Serial.println("End charging");
+        snprintf(strData,MAXSTRDATALENGTH+1,"%i|End charging",idCHARGINGSTATE);
+        break;
+      case 0x16:
+        Serial.println("AC");
+        snprintf(strData,MAXSTRDATALENGTH+1,"%i|AC",idCHARGINGSTATE);
+        break;
+      case 0x18:
+        Serial.println("Trickle charge");
+        snprintf(strData,MAXSTRDATALENGTH+1,"%i|Trickle charge",idCHARGINGSTATE);
+        break;
+      default:
+        Serial.println(g_dataBuffer[1]);
+        snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idCHARGINGSTATE,g_dataBuffer[1]);
+    }
+  } else {
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idCHARGINGSTATE);
+  }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+}
+
+
+/* CO2 content interior
+ *  
+ * Example:
+ * 17:56:08.681 -> Send    ID: 746 Flags:0 Length:8 Data:03 22 42 DB 00 00 00 00 
+ * 17:56:08.681 -> Receive ID: 7B0 Flags:0 Length:8 Data:05 62 42 DB 00 05 AA AA 
+ */
+void readAndSendCO2contentInterior() {
+  #define MAXSTRDATALENGTH 80
+  char strData[MAXSTRDATALENGTH+1];
+
+  if (sendUDSRequest(0x746,UDS_ReadDataByIdentifier_0x22,0x42,0xDB)) {
+    Serial.print("CO2 content interior in ppm: ");
+    Serial.println(buffer2unsignedLong()*100);   
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i",idCO2CONTENTINTERIOR,buffer2unsignedLong()*100);
+  } else {
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idCO2CONTENTINTERIOR);
+  }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+}
+
+/* GPS-Time
+ *  
+ * Example:
+ * 17:48:31.610 -> Send    ID: 767 Flags:0 Length:8 Data:03 22 22 B3 00 00 00 00 
+ * 17:48:31.657 -> Receive ID: 7D1 Flags:0 Length:8 Data:10 09 62 22 B3 01 00 5D 
+ * 17:48:31.657 -> Multi frame with size 9
+ * 17:48:31.657 -> Send    ID: 767 Flags:0 Length:8 Data:30 00 00 00 00 00 00 00 
+ * 17:48:31.657 -> Expect 1 frames
+ * 17:48:31.657 -> Next receive ID: 7D1 Flags:0 Length:8 Data:21 D6 FC 1F AA AA AA AA 
+ */
+void readAndSendGPSTime() {
+  #define MAXSTRDATALENGTH 80
+  char strData[MAXSTRDATALENGTH+1];
+  char strTime[MAXSTRDATALENGTH+1];
+  char strHex[4];
+  
+  if (sendUDSRequest(0x767,UDS_ReadDataByIdentifier_0x22,0x22,0xB3)) {
+    Serial.print("GPS time: ");
+    strData[0] ='\0';
+    for (int i=0;i<g_dataBufferLength;i++) {
+      if (i*3 < MAXSTRDATALENGTH) {
+        snprintf(strHex,MAXSTRDATALENGTH+1,"%02X ",g_dataBuffer[i]);
+        strncat(strData,strHex,3);
+      }
+    }
+    Serial.println(strData);
+    unsigned long timeValue = buffer2unsignedLong(2,4);
+
+    snprintf(strTime,MAXSTRDATALENGTH+1,"%04i-%02i-%02i %02i:%02i:%02i",
+      ((timeValue >> 26) & 0b11111)+2000,
+      (timeValue >> 22) & 0b1111,
+      (timeValue >> 17) & 0b11111,
+      (timeValue >> 12) & 0b11111,
+      (timeValue >> 6) & 0b111111, 
+      timeValue & 0b111111);
+
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%s", idGPSTIME,strTime);
+
+    // Set time for ESP32 to GPS time
+    if (((timeValue >> 26) & 0b11111)+2000 > 2022) {
+      setEspTime(strTime);
+    }
+  } else {
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idGPSTIME);
+  }
+  g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+}
+
+/* GPS data (lat/lon/ele)
+ *  
+ * Example:
+ * 12:15:25.110 -> Send    ID: 767 Flags:0 Length:8 Data:03 22 24 30 00 00 00 00 
+ * 12:15:25.156 -> Receive ID: 7D1 Flags:0 Length:8 Data:10 21 62 24 30 31 31 B0 
+ * 12:15:25.156 -> Multi frame with size 33
+ * 12:15:25.156 -> Send    ID: 767 Flags:0 Length:8 Data:30 00 00 00 00 00 00 00 
+ * 12:15:25.156 -> Expect 4 frames
+ * 12:15:25.156 -> Next receive ID: 7D1 Flags:0 Length:8 Data:21 31 31 27 34 30 2E 37 
+ * 12:15:25.203 -> Next receive ID: 7D1 Flags:0 Length:8 Data:22 22 45 00 00 34 38 B0 
+ * 12:15:25.203 -> Next receive ID: 7D1 Flags:0 Length:8 Data:23 33 37 27 31 2E 34 22 
+ * 12:15:25.203 -> Next receive ID: 7D1 Flags:0 Length:8 Data:24 4E 00 00 00 03 EB AA 
+ */
+void readAndSendGPSData() {
+  #define MAXSTRDATALENGTH 80
+  char strData[MAXSTRDATALENGTH+1];
+  char cToStr[2];
+  
+  cToStr[1] = '\0';
+  if (sendUDSRequest(0x767,UDS_ReadDataByIdentifier_0x22,0x24,0x30)) {
+    // elevation in meters
+    Serial.print("GPS ele:");
+    Serial.println(buffer2unsignedLong(28,2)-501);
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i", idGPSELE,buffer2unsignedLong(28,2)-501);    
+    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+
+    // longitude in DDD°MM'SS.S"
+    Serial.print("GPS lon:");
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|", idGPSLON);
+    if (g_dataBufferLength >= 14) {
+      for (int i=0;i<14;i++){
+        if (g_dataBuffer[i]==0) break;
+        Serial.print(char(g_dataBuffer[i]));
+        cToStr[0]=char(g_dataBuffer[i]);
+        strncat(strData,cToStr,1);
+      }
+    }
+    Serial.println();
+    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+
+    // latitude in DDD°MM'SS.S"
+    Serial.print("GPS lat:");
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|", idGPSLAT);
+    if (g_dataBufferLength >= 28) {
+      for (int i=14;i<28;i++){
+        if (g_dataBuffer[i]==0) break;
+        Serial.print(char(g_dataBuffer[i]));
+        cToStr[0]=char(g_dataBuffer[i]);
+        strncat(strData,cToStr,1);
+      }
+    }
+    Serial.println();
+    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+  } else {
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idGPSELE);
+    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idGPSLAT);
+    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|ERR",idGPSLON);
+    g_SerialBT.write((byte*)strData,strlen(strData)+1); 
   }
 }
 

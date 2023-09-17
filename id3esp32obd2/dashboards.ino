@@ -5,6 +5,11 @@
 
 // First/starting dashboard
 void requestDefaultDashboard(byte boardID) {
+  // VIN
+  checkBTReceive();
+  if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
+  readAndSendVIN();
+
   // Driving mode position
   checkBTReceive();
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
@@ -20,10 +25,20 @@ void requestDefaultDashboard(byte boardID) {
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
   readAndSendODOMETER();
 
-  // VIN
+  // Outside temperature
   checkBTReceive();
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
-  readAndSendVIN();
+  readAndSendTemperatureOutside();
+
+  // Inside temperature
+  checkBTReceive();
+  if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
+  readAndSendTemperatureInside();
+
+  // CO2 content interior
+  checkBTReceive();
+  if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
+  readAndSendCO2contentInterior();
 
   // Voltage for 12V battery from analog pin
   readAndSendBAT12V();
@@ -39,6 +54,17 @@ void requestSpeedDashboard() {
   readAndSendSpeed();
 }
 
+// GPS dashboard
+void requestGPSDashboard(byte boardID) {
+  checkBTReceive();
+  if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
+  readAndSendGPSTime();
+
+  checkBTReceive();
+  if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
+  readAndSendGPSData();
+}
+
 // HV dashboard
 void requestHVDashboard(byte boardID) {
   // SOC (BMS)
@@ -46,15 +72,15 @@ void requestHVDashboard(byte boardID) {
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
   readAndSendSOCBMS();
 
-  // HV auxilary consumer power
+  // Charging state
   checkBTReceive();
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
-  readAndSendHVAuxilaryPower();
+  readAndSendChargingState();
 
-  // HV Battery main temperature
+  // CruisingRange
   checkBTReceive();
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
-  readAndSendHVMainTemperature();
+  readAndSendCruisingRange();
 
   // Circulation pump HV battery
   checkBTReceive();
@@ -76,12 +102,27 @@ void requestHVDashboard(byte boardID) {
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
   readAndSendHVDynamicChargeLimit();
 
+  // HV Battery main temperature
+  checkBTReceive();
+  if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
+  readAndSendHVMainTemperature();
+
   // HV total charge/discharge
   checkBTReceive();
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
   readAndSendHVTotalChargeDischarge();
 
-  // HV capacity
+  // HV auxilary consumer power
+  checkBTReceive();
+  if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
+  readAndSendHVAuxilaryPower();
+
+  // PTC heater battery
+  checkBTReceive();
+  if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
+  readAndSendPTCHeaterCurrent();
+
+   // HV capacity
   checkBTReceive();
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
   readAndSendHVCapacity();
@@ -89,11 +130,6 @@ void requestHVDashboard(byte boardID) {
 
 // Custom dashboard
 void requestMyDashboard(byte boardID) {
-  // VIN
-  checkBTReceive();
-  if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
-  readAndSendVIN();
-
   // SOC (BMS)
   checkBTReceive();
   if (boardID != g_requestDashboard) return; // Bluetooth client changed dashboard
