@@ -29,7 +29,7 @@
  * - GPS longitude
  * 
  * License: 2-Clause BSD License
- * Copyright (c) 2023 codingABI
+ * Copyright (c) 2024 codingABI
  * For details see: License.txt
  * 
  * created by codingABI https://github.com/codingABI/id3esp32obd2
@@ -67,10 +67,11 @@
  * 20230626, Initial version
  * 20230712, Add support for "PTC heater current", "Outside temperature", "Inside temperature", "Cruising range", "Charging state", "CO2 content interior"
  * 20230719, Add support for "GPS time", "GPS height", "GPS latitude" and "GPS longitude", Sync ESP32 time with "GPS Time"
+ * 20241205, Update arduino-esp32 from 2.0.17 to 3.0.5 (IDF 5.1.4)
  */
 
 #include <driver/gpio.h>
-#include <driver/can.h>
+#include <driver/twai.h>
 #include "secrets.h"
 #include <BluetoothSerial.h>
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
@@ -83,8 +84,8 @@
 #define BTDEVICENAME "id3esp32obd2"
 
 // Some CAN/UDS/ISOTP definitions
-#define CAN_RECEIVE_TIMEOUT 1000 // 10000
-#define CAN_SEND_TIMEOUT 4000
+#define TWAI_RECEIVE_TIMEOUT 1000 // 10000
+#define TWAI_SEND_TIMEOUT 4000
 #define UDS_ReadDataByIdentifier_0x22 0x22
 #define UDS_DiagnosticSessionControl_0x10 0x10
 #define UDS_ExtendedDiagnosticSession_0x03 0x03
@@ -172,62 +173,47 @@ enum beepTypes { DEFAULTBEEP, SHORTBEEP, LONGBEEP, HIGHSHORTBEEP, LASER };
 void beep(int type=DEFAULTBEEP) {
   // User PWM to improve quality
   switch(type) {
-    case DEFAULTBEEP: { // 500 Hz for 200ms
-      ledcSetup(0, 500, 8);
-      ledcAttachPin(BUZZER_PIN, 0);
-      ledcWrite(0, 128);
+    case DEFAULTBEEP: // 500 Hz for 200ms
+      ledcAttach(BUZZER_PIN,500,8);
+      ledcWrite(BUZZER_PIN, 128);
       delay(200);
-      ledcWrite(0, 0);
-      ledcDetachPin(BUZZER_PIN);          
+      ledcWrite(BUZZER_PIN, 0);
+      ledcDetach(BUZZER_PIN);          
       break;
-    }
-    case SHORTBEEP: { // 1 kHz for 100ms
-      ledcSetup(0, 1000, 8);
-      ledcAttachPin(BUZZER_PIN, 0);
-      ledcWrite(0, 128);
+    case SHORTBEEP: // 1 kHz for 100ms
+      ledcAttach(BUZZER_PIN,1000,8);
+      ledcWrite(BUZZER_PIN, 128);
       delay(100);
-      ledcWrite(0, 0);
-      ledcDetachPin(BUZZER_PIN);          
+      ledcWrite(BUZZER_PIN, 0);
+      ledcDetach(BUZZER_PIN);          
       break;
-    }
-    case LONGBEEP: { // 250 Hz for 400ms
-      ledcSetup(0, 250, 8);
-      ledcAttachPin(BUZZER_PIN, 0);
-      ledcWrite(0, 128);
+    case LONGBEEP: // 250 Hz for 400ms
+      ledcAttach(BUZZER_PIN,250,8);
+      ledcWrite(BUZZER_PIN, 128);
       delay(400);
-      ledcWrite(0, 0);
-      ledcDetachPin(BUZZER_PIN);          
+      ledcWrite(BUZZER_PIN, 0);
+      ledcDetach(BUZZER_PIN);          
       break;
-    }
     case HIGHSHORTBEEP: { // High and short beep 
-      ledcSetup(0, 5000, 8);
-      ledcAttachPin(BUZZER_PIN, 0);
-      ledcWrite(0, 128);
+      ledcAttach(BUZZER_PIN,5000,8);
+      ledcWrite(BUZZER_PIN, 128);
       delay(100);
-      ledcWrite(0, 0);
-      ledcDetachPin(BUZZER_PIN);          
+      ledcWrite(BUZZER_PIN, 0);
+      ledcDetach(BUZZER_PIN);          
       break;
     }
     case LASER: { // Laser like sound
       int i = 5000; // Start frequency in Hz (goes down to 300 Hz)
       int j = 300; // Start duration in microseconds (goes up to 5000 microseconds)
-      ledcSetup(0, i, 8);
-      ledcAttachPin(BUZZER_PIN, 0);
-      ledcWrite(0, 0);
+      ledcAttach(BUZZER_PIN,i,8);
       while (i>300) {
         i -=50;
         j +=50;
-        ledcSetup(0, i, 8);
-        ledcWrite(0, 128);
-        delayMicroseconds(j);
-        ledcWrite(0,0);
-        delayMicroseconds(1000);
+        ledcWriteTone(BUZZER_PIN,i);
+        delayMicroseconds(j+1000);
       }
-      ledcWrite(0, 0);
-      ledcDetachPin(BUZZER_PIN);          
+      ledcDetach(BUZZER_PIN);
       break;
-    }
-    default: {
     }
   }
 }
@@ -320,16 +306,16 @@ void setup() {
   setCpuFrequencyMhz(80);
 
   // Init CAN
-  can_general_config_t g_config = CAN_GENERAL_CONFIG_DEFAULT(CTX_PIN, CRX_PIN, CAN_MODE_NORMAL);
-  can_timing_config_t t_config = CAN_TIMING_CONFIG_500KBITS();
-  can_filter_config_t f_config = CAN_FILTER_CONFIG_ACCEPT_ALL();
-  if (can_driver_install(&g_config, &t_config, &f_config) == ESP_OK) {
+  twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT(CTX_PIN, CRX_PIN, TWAI_MODE_NORMAL);
+  twai_timing_config_t t_config = TWAI_TIMING_CONFIG_500KBITS();
+  twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
+  if (twai_driver_install(&g_config, &t_config, &f_config) == ESP_OK) {
     Serial.println("CAN driver installed");
   } else {
     Serial.println("Failed to install CAN driver");
   }
 
-  if (can_start() == ESP_OK) {
+  if (twai_start() == ESP_OK) {
     Serial.println("CAN driver started");
   } else {
     Serial.println("Failed to start CAN driver");

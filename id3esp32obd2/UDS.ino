@@ -55,7 +55,7 @@ void showBuffer() {
 }
 
 // Show content of a CAN message
-void showMessage(can_message_t *message) {
+void showMessage(twai_message_t *message) {
   #define MAXSTRDATALENGTH 80
   char strData[MAXSTRDATALENGTH+1];
   
@@ -66,7 +66,7 @@ void showMessage(can_message_t *message) {
   Serial.print(" Length:");
   Serial.print(message->data_length_code);
 
-  if (!(message->flags & CAN_MSG_FLAG_RTR)) {
+  if (!(message->flags & TWAI_MSG_FLAG_RTR)) {
     Serial.print(" Data:");
     for (int i=0; i < message->data_length_code;i++) {
       snprintf(strData,MAXSTRDATALENGTH+1,"%02X",message->data[i]);
@@ -83,12 +83,12 @@ unsigned long swapIsoTpSourceTarget(unsigned long canID) {
 
 // Send a UDS request and write response to the receive buffer
 bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByte, byte parameterIDLowByte) {
-  can_message_t txMessage, rxMessage, fcMessage;
+  twai_message_t txMessage, rxMessage, fcMessage;
   unsigned long lastSentMS;
   byte flags = 0;
   esp_err_t error;
 
-  if (canID > 2047) flags = CAN_MSG_FLAG_EXTD; // 29 bit ID needed?
+  if (canID > 2047) flags = TWAI_MSG_FLAG_EXTD; // 29 bit ID needed?
   
   // Clear receive buffer before requesting new data
   clearBuffer();
@@ -109,7 +109,7 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
   Serial.print("Send    ");
   showMessage(&txMessage);  
   Serial.println();
-  error = can_transmit(&txMessage, pdMS_TO_TICKS(CAN_SEND_TIMEOUT));
+  error = twai_transmit(&txMessage, pdMS_TO_TICKS(TWAI_SEND_TIMEOUT));
   if (error != ESP_OK) {
     Serial.print("Send error ");
     Serial.println(esp_err_to_name(error));
@@ -119,12 +119,12 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
 
   do { // Receive frames until correct response, timeout or failure
     long remainingTimeoutMS;
-    remainingTimeoutMS = CAN_RECEIVE_TIMEOUT-(millis()-lastSentMS);
+    remainingTimeoutMS = TWAI_RECEIVE_TIMEOUT-(millis()-lastSentMS);
     if (remainingTimeoutMS <= 0) {
       Serial.println("Timeout receiving message");
       return false; // Abort
     }
-    error = can_receive(&rxMessage, pdMS_TO_TICKS(remainingTimeoutMS));
+    error = twai_receive(&rxMessage, pdMS_TO_TICKS(remainingTimeoutMS));
     if (error != ESP_OK) {
       Serial.print("Receive error ");
       Serial.println(esp_err_to_name(error));
@@ -247,14 +247,14 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
       Serial.print("Send    ");
       showMessage(&fcMessage);  
       Serial.println();
-      error = can_transmit(&fcMessage, pdMS_TO_TICKS(CAN_SEND_TIMEOUT));
+      error = twai_transmit(&fcMessage, pdMS_TO_TICKS(TWAI_SEND_TIMEOUT));
       if (error != ESP_OK) {
         Serial.print("Send error ");
         Serial.println(esp_err_to_name(error));
         return false; // Abort
       }
 
-      // First frame has 6 byte payload and consecutive frames 7 bytes 
+      // First frame has 6 bytes payload and the consecutive frames 7 bytes 
       int frames = (frameSize)/7;
       Serial.print("Expect ");
       Serial.print(frames);
@@ -262,7 +262,7 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
 
       unsigned long originIdentifier = rxMessage.identifier;
       while (g_dataBufferLength < frameSize - 3) {
-        error = can_receive(&rxMessage, pdMS_TO_TICKS(CAN_RECEIVE_TIMEOUT));
+        error = twai_receive(&rxMessage, pdMS_TO_TICKS(TWAI_RECEIVE_TIMEOUT));
         if (error != ESP_OK) {
           Serial.print("Receive error ");
           Serial.println(esp_err_to_name(error));
@@ -292,6 +292,6 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
       showBuffer();
       return true; // Receive message successfully parsed
     }
-  } while (millis()-lastSentMS < CAN_RECEIVE_TIMEOUT);
+  } while (millis()-lastSentMS < TWAI_RECEIVE_TIMEOUT);
   return false; // No matching receive message
 }
