@@ -55,7 +55,7 @@ Power consumption: 0.6W (0.3W when Android device is not connected), 0W when pow
 ### Used Arduino development environment
 
 - Arduino IDE 2.3.4 or 1.8.19
-- arduino-esp32 3.0.5 (Version 2.0.x works with older version [id3esp32obd2 v2.0.0](https://github.com/codingABI/id3esp32obd2/releases/tag/v2.0.0)
+- arduino-esp32 3.0.5 (Version 2.0.x works with older version [id3esp32obd2 v2.0.0](https://github.com/codingABI/id3esp32obd2/releases/tag/v2.0.0))
 
 ### OBD2 and power supply
 The VW ID.3 has an ODB2 female connector below the steering wheel:
