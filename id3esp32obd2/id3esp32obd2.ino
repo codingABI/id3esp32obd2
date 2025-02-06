@@ -29,7 +29,7 @@
  * - GPS longitude
  * 
  * License: 2-Clause BSD License
- * Copyright (c) 2024 codingABI
+ * Copyright (c) 2023-2024 codingABI
  * For details see: License.txt
  * 
  * created by codingABI https://github.com/codingABI/id3esp32obd2

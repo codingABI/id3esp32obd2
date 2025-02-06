@@ -38,7 +38,7 @@ The following diagnostics data values are supported at the moment:
 - This is no a complete ISO-TP and/or UDS implementation. It is just enough to receive some data from a VW ID.3. I'm no CAN expert, just a beginner
   
 ## License and copyright
-This project is licensed under the terms of the 2-Clause BSD License [Copyright (c) 2024 codingABI](LICENSE). 
+This project is licensed under the terms of the 2-Clause BSD License [Copyright (c) 2023-2024 codingABI](LICENSE). 
 
 ## Appendix
 ### Hardware
