@@ -68,6 +68,7 @@
  * 20230712, Add support for "PTC heater current", "Outside temperature", "Inside temperature", "Cruising range", "Charging state", "CO2 content interior"
  * 20230719, Add support for "GPS time", "GPS height", "GPS latitude" and "GPS longitude", Sync ESP32 time with "GPS Time"
  * 20241205, Update arduino-esp32 from 2.0.17 to 3.0.5 (IDF 5.1.4)
+ * 20250915, Change elevation delta from 501 to 503 because of additional samples.
  */
 
 #include <driver/gpio.h>

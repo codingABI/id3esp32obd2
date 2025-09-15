@@ -568,13 +568,40 @@ void readAndSendGPSData() {
   #define MAXSTRDATALENGTH 80
   char strData[MAXSTRDATALENGTH+1];
   char cToStr[2];
-  
+
+  #define DELTA 503
+  /*
+   * Byte 28 and 29 of the UDS response seem to be the gps elevation with a delta of about ~503. 
+   * The delta was calculated by comparing the UDS response values with some official altitude values in Bavaria/Germany. 
+   * Perhaps this delta is dependent on the location, ID.3 firmware ... Feel free to change the DELTA, if the delta does not fit for you
+   * Some additional details can be found at https://github.com/codingABI/id3esp32obd2/issues/1
+   * 
+   * UDS raw  | Official/real  | Delta
+   * values   | altitude in m  |
+   * ---------+----------------+--------------
+   * 971      | 467            | 504
+   * 951      | 449            | 502
+   * 1221     | 715            | 506
+   * 1223     | 718            | 505
+   * 979      | 472            | 507
+   * 967      | 460            | 507
+   * 1015     | 513            | 502
+   * 1175     | 673            | 502
+   * 1259     | 757            | 502
+   * 963      | 459            | 504
+   * 1291     | 787            | 504
+   * 1497     | 998            | 499
+   * 1901     | 1400           | 501
+   * 1915     | 1413           | 502
+   * 1565     | 1065           | 500
+   * => Average Delta 503
+   */
   cToStr[1] = '\0';
   if (sendUDSRequest(0x767,UDS_ReadDataByIdentifier_0x22,0x24,0x30)) {
     // elevation in meters
     Serial.print("GPS ele:");
-    Serial.println(buffer2unsignedLong(28,2)-501);
-    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i", idGPSELE,buffer2unsignedLong(28,2)-501);    
+    Serial.println(buffer2unsignedLong(28,2)-DELTA);
+    snprintf(strData,MAXSTRDATALENGTH+1,"%i|%i", idGPSELE,buffer2unsignedLong(28,2)-DELTA);    
     g_SerialBT.write((byte*)strData,strlen(strData)+1); 
 
     // longitude in DDD°MM'SS.S"
