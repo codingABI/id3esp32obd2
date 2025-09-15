@@ -573,7 +573,8 @@ void readAndSendGPSData() {
   /*
    * Byte 28 and 29 of the UDS response seem to be the gps elevation with a delta of about ~503. 
    * The delta was calculated by comparing the UDS response values with some official altitude values in Bavaria/Germany. 
-   * Perhaps this delta is dependent on the location, ID.3 firmware ... Feel free to change the DELTA, if the delta does not fit for you
+   * Perhaps this delta is dependent on the location, ID.3 firmware, gps module ... 
+   * Feel free to change the DELTA, if the delta does not fit for you
    * Some additional details can be found at https://github.com/codingABI/id3esp32obd2/issues/1
    * 
    * UDS raw  | Official/real  | Delta
