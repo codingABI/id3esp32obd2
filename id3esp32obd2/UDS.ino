@@ -1,9 +1,9 @@
 /* ----------- Stuff to create UDS Unified Diagnostic Services requests ----------
  * License: 2-Clause BSD License
- * Copyright (c) 2023 codingABI
+ * Copyright (c) 2023-2026 codingABI
  */
- 
-// Convert databuffer to usigned long
+
+// Convert databuffer to unsigned long
 unsigned long buffer2unsignedLong(int startByte=0,int bytesCount=0) {
   unsigned long result = 0;
   int maxBytes;
@@ -16,15 +16,15 @@ unsigned long buffer2unsignedLong(int startByte=0,int bytesCount=0) {
     return 0;
   }
   if ((bytesCount > 0) && (startByte + bytesCount > g_dataBufferLength)) {
-    Serial.print("Start byte and lenght out of range ");
+    Serial.print("Start byte and length out of range ");
     Serial.print(startByte);
-    Serial.print("+");    
+    Serial.print("+");
     Serial.print(bytesCount);
     Serial.print(">");
     Serial.println(g_dataBufferLength);
     return 0;
   }
-  
+
   if (bytesCount == 0) maxBytes = g_dataBufferLength; else maxBytes = bytesCount;
   for (int i=0;i<maxBytes;i++) {
     result += (g_dataBuffer[i+startByte]<<((maxBytes-i-1)*8));
@@ -40,7 +40,7 @@ void clearBuffer() {
   }
 }
 
-// Show contens of received data buffer
+// Show content of received data buffer
 void showBuffer() {
   #define MAXSTRDATALENGTH 80
   char strData[MAXSTRDATALENGTH+1];
@@ -58,7 +58,7 @@ void showBuffer() {
 void showMessage(twai_message_t *message) {
   #define MAXSTRDATALENGTH 80
   char strData[MAXSTRDATALENGTH+1];
-  
+
   Serial.print("ID: ");
   Serial.print(message->identifier,HEX);
   Serial.print(" Flags:");
@@ -73,7 +73,7 @@ void showMessage(twai_message_t *message) {
       Serial.print(strData);
       if (i < message->data_length_code) Serial.print(" ");
     }
-  } 
+  }
 }
 
 // Swap first two bytes to swap source and target address for a 29 bit ISO-TP in "normal fixed addressing"
@@ -89,12 +89,12 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
   esp_err_t error;
 
   if (canID > 2047) flags = TWAI_MSG_FLAG_EXTD; // 29 bit ID needed?
-  
+
   // Clear receive buffer before requesting new data
   clearBuffer();
 
-  delay(500); // Without delay my receivings were behind time
-  
+  delay(500); // Without delay, my reception was significantly delayed
+
   txMessage.identifier = canID;
   txMessage.flags = flags;
   txMessage.data_length_code = 8; // Length of CAN packet
@@ -107,7 +107,7 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
   txMessage.data[6] = 0x00; // Padding
   txMessage.data[7] = 0x00; // Padding
   Serial.print("Send    ");
-  showMessage(&txMessage);  
+  showMessage(&txMessage);
   Serial.println();
   error = twai_transmit(&txMessage, pdMS_TO_TICKS(TWAI_SEND_TIMEOUT));
   if (error != ESP_OK) {
@@ -134,9 +134,9 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
     showMessage(&rxMessage);
     Serial.println();
     if (rxMessage.data_length_code != 8) { // At the moment I expect always 8 bytes per frame
-      Serial.print("Wrong frame lenght ");
-      Serial.println(rxMessage.data_length_code); 
-      continue; // Ignore frame and receive again    
+      Serial.print("Wrong frame length ");
+      Serial.println(rxMessage.data_length_code);
+      continue; // Ignore frame and receive again
     }
     if (((rxMessage.data[0]>>4) != ISOTP_singleFrame_0x0) && ((rxMessage.data[0]>>4) != ISOTP_firstFrame_0x1)) {
       Serial.print("Wrong frame type ");
@@ -148,8 +148,8 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
     if ((rxMessage.data[0]>>4) == ISOTP_singleFrame_0x0) {
       if (rxMessage.data_length_code < 4) { // At least 4 bytes for a single frame needed
         Serial.print("Frame length to short ");
-        Serial.println(rxMessage.data_length_code); 
-        continue; // Ignore frame and receive again    
+        Serial.println(rxMessage.data_length_code);
+        continue; // Ignore frame and receive again
       }
       if (rxMessage.data[0] < 3) { // At least 3 bytes of payload needed
         Serial.println("Message too short");
@@ -157,10 +157,10 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
       }
       if (rxMessage.data[1] == UDS_NegativeResponse_0x7f) {
         if (rxMessage.data[2] == txMessage.data[1]) { // Error seems to be related to my request
-          Serial.print("Error received ");     
+          Serial.print("Error received ");
           switch(rxMessage.data[3]) {
             case UDS_RequestOutOfRange_0x31:
-              Serial.println("0x31 request out of range"); 
+              Serial.println("0x31 request out of range");
               break;
             case UDS_ServiceNotSupported_0x11:
               Serial.println("0x11 service not supported");
@@ -170,7 +170,7 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
               continue; // No error, response should be received later
               break;
             default:
-              Serial.println(rxMessage.data[3],HEX); 
+              Serial.println(rxMessage.data[3],HEX);
           }
           return false; // Abort
         } else continue; // Ignore and receive again, if error was not related to my request
@@ -200,15 +200,15 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
     if ((rxMessage.data[0]>>4) == ISOTP_firstFrame_0x1) {
       if (rxMessage.data_length_code < 5) { // At least 5 bytes for a multi frame needed
         Serial.print("Frame length to short ");
-        Serial.println(rxMessage.data_length_code); 
-        continue; // Ignore frame and receive again    
+        Serial.println(rxMessage.data_length_code);
+        continue; // Ignore frame and receive again
       }
 
       int frameSize = ((rxMessage.data[0] & 0xf) << 8) + rxMessage.data[1];
       g_dataBufferLength = 0;
       Serial.print("Multi frame with size ");
       Serial.println(frameSize);
-      
+
       if (rxMessage.data[2] != txMessage.data[1] + 0x40) {
         Serial.println("Service ID does not match to sent service ID");
         continue; // Ignore frame and receive again
@@ -243,9 +243,9 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
       fcMessage.data[4] = 0x00;
       fcMessage.data[5] = 0x00;
       fcMessage.data[6] = 0x00;
-      fcMessage.data[7] = 0x00;  
+      fcMessage.data[7] = 0x00;
       Serial.print("Send    ");
-      showMessage(&fcMessage);  
+      showMessage(&fcMessage);
       Serial.println();
       error = twai_transmit(&fcMessage, pdMS_TO_TICKS(TWAI_SEND_TIMEOUT));
       if (error != ESP_OK) {
@@ -254,7 +254,7 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
         return false; // Abort
       }
 
-      // First frame has 6 bytes payload and the consecutive frames 7 bytes 
+      // First frame has 6 bytes payload and the consecutive frames 7 bytes
       int frames = (frameSize)/7;
       Serial.print("Expect ");
       Serial.print(frames);

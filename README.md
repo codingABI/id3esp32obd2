@@ -14,7 +14,7 @@ The following diagnostics data values are supported at the moment:
 - Driving mode position
 - HV auxiliary consumer power
 - HV battery main temperature
-- HV battery circulation pump 
+- HV battery circulation pump
 - HV battery voltage
 - HV battery current
 - HV dynamic limit for charging
@@ -36,9 +36,9 @@ The following diagnostics data values are supported at the moment:
 **WARNING:**
 - Connecting something to your VW ID.3 is your own risk and do this ONLY, if you know, what are you doing. If you make a mistake, it could be a very expensive mistake.
 - This is no a complete ISO-TP and/or UDS implementation. It is just enough to receive some data from a VW ID.3. I'm no CAN expert, just a beginner
-  
+
 ## License and copyright
-This project is licensed under the terms of the 2-Clause BSD License [Copyright (c) 2023-2024 codingABI](LICENSE). 
+This project is licensed under the terms of the 2-Clause BSD License [Copyright (c) 2023-2026 codingABI](LICENSE).
 
 ## Appendix
 ### Hardware
@@ -46,7 +46,7 @@ This project is licensed under the terms of the 2-Clause BSD License [Copyright 
 - SN65HVD230 CAN transceiver (60 Ohm resistor R2 between CANHigh and CANLow was removed)
 - OBD2 Connector cable (Plugged in to the OBD2 female connector below the steering wheel)
 - VW ID.3 Car (Code was developed and tested on a ID.3 Pro S)
-- Two resistors (470k, 100k) for a voltage divider to measure the 12V car battery voltage on an ESP32 analog pin 
+- Two resistors (470k, 100k) for a voltage divider to measure the 12V car battery voltage on an ESP32 analog pin
 - LM2596 Step down voltage converter (to convert the 12V car battery to 3.3V as a power supply for the ESP32)
 - Android device with the self-made app: *id3esp32obd2* (https://github.com/codingABI/id3esp32obd2/id3esp32obd2.apk)
 
@@ -62,22 +62,22 @@ The VW ID.3 has an ODB2 female connector below the steering wheel:
 
 ![ID3 OBD2 Connector](assets/images/id3obd2ConnectorFemale.jpg)
 
-The *id3esp32obd2* uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to power up the ESP32 (Converted down to 3.3V by a LM2596). Pin 6 (=CAN High) and 14 (=CAN Low) are used to access the CAN bus. 
+The *id3esp32obd2* uses a male OBD2 connector and pin 16 (=12V), pin 5 (=GND) to power up the ESP32 (Converted down to 3.3V by a LM2596). Pin 6 (=CAN High) and 14 (=CAN Low) are used to access the CAN bus.
 
 ![OBD2 connector male](assets/images/obd2ConnectorMale.jpg)
 
 The 12V line can be switch on and off with the toggle switch S1.
 ### Device description
-An ESP32 has a builtin CAN controller, but needs an additional CAN transceiver. The ESP32 based *id3esp32obd2* uses a SN65HVD230 CAN transceiver. 
+An ESP32 has a builtin CAN controller, but needs an additional CAN transceiver. The ESP32 based *id3esp32obd2* uses a SN65HVD230 CAN transceiver.
 
 ![SN65HVD230 removed resistor](assets/images/SN65HVD230.jpg)
 
-The red marked 60 Ohm resistor R2 between CANHigh and CANLow was removed. 
+The red marked 60 Ohm resistor R2 between CANHigh and CANLow was removed.
 
 The ESP32 waits for the *"allowed"* Android device connecting via Bluetooth (The *"allowed"* Android device can be defined in  [secrets.h](/id3esp32obd2/secrets.h)). After connecting with the *"allowed"* Android device the ESP32 requests CAN data and forwards the response via Bluetooth. While the *allowed* Android device is connected the blue, ESP32 builtin led (Pin 2) is enabled. When the Android device disconnects the Bluetooth connection the CAN requests will be stopped.
 
 **WARNING**
-Do not lock the car without disconnecting the Bluetooth connection or power off the device by the toggle switch S1, because the VW ID.3 may triggers a car alarm, if CAN requests are received in a locked state. 
+Do not lock the car without disconnecting the Bluetooth connection or power off the device by the toggle switch S1, because the VW ID.3 may triggers a car alarm, if CAN requests are received in a locked state.
 
 The *id3esp32obd2* waits 500ms between each CAN bus request, because I got weired responses when sending requests too quickly.
 
@@ -143,7 +143,7 @@ Mixed dashboard to collect data for power consumption. You can reset the delta/d
 #### Dashboard: GPS
 ![Dashboard 4](assets/images/appDash4.jpg)
 
-Values from the car GPS. The GPS time will be used as ESP32 device time. 
+Values from the car GPS. The GPS time will be used as ESP32 device time.
 
 #### Info screen
 ![App info screen](assets/images/appInfoScreen.jpg)

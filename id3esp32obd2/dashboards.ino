@@ -1,6 +1,6 @@
 /* ----------- Dashboards  ----------
  * License: 2-Clause BSD License
- * Copyright (c) 2023 codingABI
+ * Copyright (c) 2023-2026 codingABI
  */
 
 // First/starting dashboard

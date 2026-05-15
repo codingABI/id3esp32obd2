@@ -10,7 +10,7 @@
  * - Driving mode position
  * - HV auxiliary consumer power
  * - HV battery main temperature
- * - HV battery circulation pump 
+ * - HV battery circulation pump
  * - HV battery voltage
  * - HV battery current
  * - HV dynamic limit for charging
@@ -27,34 +27,34 @@
  * - GPS height
  * - GPS latitude
  * - GPS longitude
- * 
+ *
  * License: 2-Clause BSD License
- * Copyright (c) 2023-2024 codingABI
+ * Copyright (c) 2023-2026 codingABI
  * For details see: License.txt
- * 
+ *
  * created by codingABI https://github.com/codingABI/id3esp32obd2
- * 
+ *
  * Warning:
  * - Connecting something to your VW ID.3 is your own risk and do this ONLY, if you know, what are you doing. If you make a mistake, it could be a very expensive mistake.
  * - This is no a complete ISO-TP and/or UDS implementation. It is just enough to receive some data from a VW ID.3. I'm no CAN expert, just a beginner
- * 
+ *
  * Hardware:
  * - ESP-WROOM-32 NodeMCU (Board manager: ESP32 Dev Model)
  * - SN65HVD230 CAN transceiver (60 Ohm resistor R2 between CANHigh and CANLow was removed)
  * - OBD2 Connector cable (Plugged in to the OBD2 female connector below the steering wheel)
  * - VW ID.3 Car (Code was developed and tested on a ID.3 Pro S)
- * - Two resistors (470k, 100k) for a voltage divider to measure the 12V car battery voltage on an ESP32 analog pin 
+ * - Two resistors (470k, 100k) for a voltage divider to measure the 12V car battery voltage on an ESP32 analog pin
  * - LM2596 Step down voltage converter (to convert the 12V car battery to 3.3V as a power supply for the ESP32)
  * - Android device with the self-made app: id3esp32obd2 (https://github.com/codingABI/id3esp32obd2/id3esp32obd2.apk)
- *  
+ *
  * Power consumption:
  * - 0.6W (0.3W when no Android device is connected)
- *  
+ *
  * VW ID.3 OBD2 connector characteristics (without anything plugged in):
  * - 70 Ohm between CANHigh and CANLow
  * - 2.5V between CANHigh and GND
  * - 2.5V between CANLow and GND
- * 
+ *
  * Usefull links:
  * https://automotive.wiki/index.php/ISO_14229
  * https://mk4-wiki.denkdose.de/artikel/can-bus/protokolle/uds/sid
@@ -62,8 +62,8 @@
  * https://github.com/nickn17/evDash/blob/master/src/CarVWID3.cpp
  * https://github.com/spot2000/Volkswagen-MEB-EV-CAN-parameters/blob/main/VW%20MEB%20UDS%20PIDs%20list.csv
  * https://www.meinid.com/thread/1640-obd2-header-pid-liste/
- * 
- * History: 
+ *
+ * History:
  * 20230626, Initial version
  * 20230712, Add support for "PTC heater current", "Outside temperature", "Inside temperature", "Cruising range", "Charging state", "CO2 content interior"
  * 20230719, Add support for "GPS time", "GPS height", "GPS latitude" and "GPS longitude", Sync ESP32 time with "GPS Time"
@@ -102,11 +102,11 @@
 #define ISOTP_flowControlFrame_0x3 0x3
 #define ISOTP_functionalRequests_0x18DB33F1 0x18DB33F1
 
-// Car parameters, that can sent by Bluetooth 
-enum dataIDs { 
+// Car parameters, that can sent by Bluetooth
+enum dataIDs {
   idNOP,
-  idSOCBMS, 
-  idSPEED, 
+  idSOCBMS,
+  idSPEED,
   idCARMODE,
   idAUXPOWER,
   idODOMETER,
@@ -135,7 +135,7 @@ enum dataIDs {
 };
 
 // A dashboard is a set of car parameters. A Bluetooth client can request a dashboard.
-enum dashboards { 
+enum dashboards {
   DEFAULTDASHBOARD,
   SPEEDDASHBOARD,
   HVDASHBOARD,
@@ -144,7 +144,7 @@ enum dashboards {
 };
 
 // Timezone for Germany
-#define TIMEZONE "CET-1CEST,M3.5.0/02,M10.5.0/03" 
+#define TIMEZONE "CET-1CEST,M3.5.0/02,M10.5.0/03"
 
 // Pin definitions
 #define LED_PIN 2
@@ -179,28 +179,28 @@ void beep(int type=DEFAULTBEEP) {
       ledcWrite(BUZZER_PIN, 128);
       delay(200);
       ledcWrite(BUZZER_PIN, 0);
-      ledcDetach(BUZZER_PIN);          
+      ledcDetach(BUZZER_PIN);
       break;
     case SHORTBEEP: // 1 kHz for 100ms
       ledcAttach(BUZZER_PIN,1000,8);
       ledcWrite(BUZZER_PIN, 128);
       delay(100);
       ledcWrite(BUZZER_PIN, 0);
-      ledcDetach(BUZZER_PIN);          
+      ledcDetach(BUZZER_PIN);
       break;
     case LONGBEEP: // 250 Hz for 400ms
       ledcAttach(BUZZER_PIN,250,8);
       ledcWrite(BUZZER_PIN, 128);
       delay(400);
       ledcWrite(BUZZER_PIN, 0);
-      ledcDetach(BUZZER_PIN);          
+      ledcDetach(BUZZER_PIN);
       break;
-    case HIGHSHORTBEEP: { // High and short beep 
+    case HIGHSHORTBEEP: { // High and short beep
       ledcAttach(BUZZER_PIN,5000,8);
       ledcWrite(BUZZER_PIN, 128);
       delay(100);
       ledcWrite(BUZZER_PIN, 0);
-      ledcDetach(BUZZER_PIN);          
+      ledcDetach(BUZZER_PIN);
       break;
     }
     case LASER: { // Laser like sound
@@ -220,7 +220,7 @@ void beep(int type=DEFAULTBEEP) {
 }
 
 // Set time of esp
-void setEspTime(char *strTime) { 
+void setEspTime(char *strTime) {
   #define MAXSTRDATALENGTH 80
   char strData[MAXSTRDATALENGTH+1];
   struct tm t;
@@ -234,10 +234,10 @@ void setEspTime(char *strTime) {
     time_t t_of_day = mktime(&t);
     struct timeval epoch;
     epoch.tv_sec = t_of_day; // epoch time (seconds)
-    epoch.tv_usec = 0; // microseconds     
+    epoch.tv_usec = 0; // microseconds
     settimeofday((const timeval*)&epoch, 0);
   }
-    
+
   setenv("TZ", TIMEZONE, 1); // Change TZ back to local TZ
   tzset();
 
@@ -262,13 +262,13 @@ void btCallback(esp_spp_cb_event_t event, esp_spp_cb_param_t *param) {
     }
     beep(SHORTBEEP);
     if ( // Send data only to the Android device defined in secrets.h
-      (param->srv_open.rem_bda[0] == g_macMobileDevice[0]) && 
+      (param->srv_open.rem_bda[0] == g_macMobileDevice[0]) &&
       (param->srv_open.rem_bda[1] == g_macMobileDevice[1]) &&
       (param->srv_open.rem_bda[2] == g_macMobileDevice[2]) &&
       (param->srv_open.rem_bda[3] == g_macMobileDevice[3]) &&
       (param->srv_open.rem_bda[4] == g_macMobileDevice[4]) &&
       (param->srv_open.rem_bda[5] == g_macMobileDevice[5])
-    ) { 
+    ) {
       g_btAuthenticated = true;
       g_VINdone = false;
     }
@@ -302,7 +302,7 @@ void setup() {
   // Pin modes
   pinMode(LED_PIN,OUTPUT);
   pinMode(MEASURE12V_PIN,INPUT);
-  
+
   // Reduce cpu speed to reduce power consumption (Serial.print and Bluetooth does not work below 80 MHz)
   setCpuFrequencyMhz(80);
 
@@ -325,13 +325,13 @@ void setup() {
   // Clear receive buffer
   clearBuffer();
 
-  // Init classic Bluetooth 
+  // Init classic Bluetooth
   g_SerialBT.register_callback(btCallback);
   if (!g_SerialBT.begin(BTDEVICENAME)) {
     Serial.println("Can not enable Bluetooth");
   } else {
     Serial.print("Bluetooth ready at ");
-    Serial.println(g_SerialBT.getBtAddressString());    
+    Serial.println(g_SerialBT.getBtAddressString());
   }
 
   Serial.println("Setup finished");
@@ -361,18 +361,18 @@ void loop() {
       break;
     case HVDASHBOARD:
       requestHVDashboard(g_requestDashboard);
-      break;    
+      break;
     case MYDASHBOARD:
       requestMyDashboard(g_requestDashboard);
-      break;    
+      break;
     case GPSDASHBOARD:
       requestGPSDashboard(g_requestDashboard);
-      break;    
+      break;
     default:
       Serial.print("Unknown dashboard requested ");
       Serial.println(g_requestDashboard);
   }
 
   // Disable LED
-  digitalWrite(LED_PIN,LOW);  
+  digitalWrite(LED_PIN,LOW);
 }
