@@ -222,12 +222,12 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
         continue; // Ignore frame and receive again
       }
 
-      for (int j=0;j<3;j++) { // Only maximal three byte for data in first frame
+      for (int j=0;j<3;j++) { // Only maximal three bytes for data in first frame
         if (g_dataBufferLength >= frameSize - 3) break;
         g_dataBuffer[g_dataBufferLength] = rxMessage.data[5+j];
         g_dataBufferLength++;
       }
-      if (rxMessage.identifier & 0xFFFF0000== 0x18DB0000) { // functional CAN id
+      if (rxMessage.identifier & 0xFFFF0000 == 0x18DB0000) { // Functional CAN id
         // Swap first two bytes to swap source and target address (A flow control frame can not be a functional requests, a.k. broadcast)
         fcMessage.identifier = swapIsoTpSourceTarget(rxMessage.identifier);
       } else {
@@ -281,7 +281,7 @@ bool sendUDSRequest(unsigned long canID, byte serviceID, byte parameterIDHighByt
           continue; // Ignore frame
         }
 
-        for (int j=0;j<rxMessage.data_length_code-1;j++) { // Maximal seven byte for data in a consecutive frame
+        for (int j=0;j<rxMessage.data_length_code-1;j++) { // Maximal seven bytes for data in a consecutive frame
           if (g_dataBufferLength >= frameSize - 3) break;
           g_dataBuffer[g_dataBufferLength] = rxMessage.data[1+j];
           if (g_dataBufferLength >= MAXBUFFER) {
